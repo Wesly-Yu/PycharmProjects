@@ -6,7 +6,7 @@ from PyQt5.QtGui import *
 import threading
 import os
 from Methodfile import getFilsName
-
+import  xlwt
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
@@ -21,10 +21,15 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.tree.clicked.connect(self.leftClickScrolToCentrol)
         self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
+        cypressDefaultPath = 'C:\\Users\\Administrator\\cypress\\integration'
+
 
     def iniUI(self):
         self.tree = self.treeWidget1
         self.tree2 = self.treeWidget_2
+        self.tree.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.tree.updateEditorData()
+        self.tree.updatesEnabled()
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree2.setContextMenuPolicy(Qt.CustomContextMenu)
         self.dialog = QtWidgets.QDialog()
@@ -89,21 +94,22 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def openFile(self):
         self.tree.headerItem().setText(0, "工程目录")
         self.tree.setColumnCount(1)
+        self.tree.updateEditorData()
         self.tree.expandAll()
-        Dirpath = QFileDialog.getExistingDirectory(self,'Open File','.home')
+        Dirpath = QFileDialog.getExistingDirectory(self,'Open File','./home')
         DirName = str(Dirpath).split('/')[-1]
         root = QTreeWidgetItem(self.tree)
         root.setIcon(0, QIcon('./image/Open.png'))
         root.setText(0,DirName)
         root.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
         filenames = getFilsName(self, Dirpath)
+
         if len(filenames) !=0:
-            for filename in filenames:
-                child = QTreeWidgetItem(root)
-                child.setText(0,filename)
-                child.setIcon(0, QIcon('./image/New.png'))
-                child.setCheckState(0, Qt.Unchecked)
-                child.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+                for filename in filenames:
+                    child = QTreeWidgetItem(root)
+                    child.setText(0,filename)
+                    child.setIcon(0, QIcon('./image/New.png'))
+                    child.setCheckState(0, Qt.Unchecked)
         else:
             QMessageBox.about(self,'消息','当前文件夹下为空')
 
@@ -121,8 +127,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             child.setText(0, filename)
             child.setIcon(0, QIcon('./image/New.png'))
             child.setCheckState(0, Qt.Unchecked)
-            child.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
-
+            # child.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+    #编辑用例 树框中的数据
     def rightClickMenu1(self,position1):
         try:
             item = self.tree.currentItem()
@@ -130,7 +136,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             if item.parent() == None:
                 self.actionA = self.contextMenu.addAction(u'新增用例')
                 self.actionC = self.contextMenu.addAction(u'重命名文件夹')
-                self.actionA.triggered.connect(self.actionAddHandler)
+                self.actionA.triggered.connect(self.actionAddFileHandler)
                 self.actionC.triggered.connect(self.actionRenameDirHandler)
                 self.contextMenu.exec_(self.tree.mapToGlobal(position1))
                 self.contextMenu.show()
@@ -145,45 +151,53 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
         except Exception as e:
             print(e)
+    # 编辑po公共参数 树框中的数据
     def rightClickMenu2(self,position2):
         try:
             item2 = self.tree2.currentItem()
             self.contextMenu = QMenu(self.tree)
             if item2.parent() == None:
-                self.actionA = self.contextMenu.addAction(u'增加')
-                self.actionA.triggered.connect(self.actionAddHandler)
+                self.actionE = self.contextMenu.addAction(u'增加')
+                self.actionE.triggered.connect(self.actionAddHandler)
                 self.contextMenu.exec_(self.tree2.mapToGlobal(position2))
                 self.contextMenu.show()
             else:
-                self.actionB = self.contextMenu.addAction(u'删除')
-                self.actionB.triggered.connect(self.actionMoveHandler)
+                self.actionF = self.contextMenu.addAction(u'删除')
+                self.actionF.triggered.connect(self.actionMoveHandler)
                 self.contextMenu.exec_(self.tree2.mapToGlobal(position2))
                 self.contextMenu.show()
 
 
         except Exception as e:
             print(e)
-    def actionAddHandler(self):
+
+    #向用例树中添加测试文件
+    def actionAddFileHandler(self):
         print(self.tree.currentItem().text(0))
         item = self.tree.currentItem()
-        node = QTreeWidgetItem(item)
-        node.setText(0,u'新增')
-        node.setText(1,'new')
+        # renameDirPath =cypressDefaultPath+"\\"+'item'
+        # node = QTreeWidgetItem(item)
+        # node.setText(0,'new.xlsx')
+        # node.setIcon(0, QIcon('./image/New.png'))
+        # node.setCheckState(0, Qt.Unchecked)
+        # workbook = xlwt.Workbook(encoding='utf-8')
+        # sheet1 = workbook.add_sheet('sheet1')
+        # workbook.save(renameDirPath+'\\'+"new.xlsx")
 
+    #重命名用例树文件夹选定的文件
     def actionRenameDirHandler(self):
         print(self.tree.currentItem().text(0))
         item2 = self.tree2.currentItem()
         node = QTreeWidgetItem(item2)
-        node.setText(0, u'新增')
         node.setText(1, 'new')
-
+    #删除用例树中不需要的用例
     def actionMoveHandler(self):
         print(self.tree.currentItem().text(0))
         item = self.tree.currentItem()
         for i in range(0, item.childCount()):
             print(item.child(item.childCount() - 1).text(0))
             item.removeChild(item.child(item.childCount() - 1))
-
+    #删除公共参数 框中的文件
     def actionMoveHandler2(self):
         print(self.tree2.currentItem().text(0))
         item2 = self.tree2.currentItem()
@@ -191,8 +205,9 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             print(item2.child(item2.childCount() - 1).text(0))
             item2.removeChild(item2.child(item2.childCount() - 1))
 
-
-
+    #重命名用例树中选定的文件
+    def actionRenameFileHandler(self):
+        pass
 
 
 

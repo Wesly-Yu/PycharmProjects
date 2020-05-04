@@ -3,7 +3,7 @@ import os
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-
+from PyQt5 import QtWidgets,QtGui,QtCore
 
 class QtTreeWidget(QMainWindow):
     def __init__(self,parent=None):
@@ -22,6 +22,7 @@ class QtTreeWidget(QMainWindow):
         child1.setText(0, u'子节点1')
         child1.setIcon(0, QIcon('./image/New.png'))
         child1.setCheckState(0, Qt.Checked)
+        child1.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
         child2 = QTreeWidgetItem(root)
         child2.setText(0, u'子节点2')
         child2.setIcon(0, QIcon('./image/New.png'))
