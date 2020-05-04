@@ -128,13 +128,17 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             item = self.tree.currentItem()
             self.contextMenu = QMenu(self.tree)
             if item.parent() == None:
-                self.actionA = self.contextMenu.addAction(u'增加')
+                self.actionA = self.contextMenu.addAction(u'新增用例')
+                self.actionC = self.contextMenu.addAction(u'重命名文件夹')
                 self.actionA.triggered.connect(self.actionAddHandler)
+                self.actionC.triggered.connect(self.actionRenameDirHandler)
                 self.contextMenu.exec_(self.tree.mapToGlobal(position1))
                 self.contextMenu.show()
             else:
-                self.actionB = self.contextMenu.addAction(u'删除')
+                self.actionE = self.contextMenu.addAction(u'重命名文件')
+                self.actionB = self.contextMenu.addAction(u'删除选中的文件')
                 self.actionB.triggered.connect(self.actionMoveHandler)
+                self.actionE.triggered.connect(self.actionRenameFileHandler)
                 self.contextMenu.exec_(self.tree.mapToGlobal(position1))
                 self.contextMenu.show()
 
@@ -166,7 +170,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         node.setText(0,u'新增')
         node.setText(1,'new')
 
-    def actionAddHandler2(self):
+    def actionRenameDirHandler(self):
         print(self.tree.currentItem().text(0))
         item2 = self.tree2.currentItem()
         node = QTreeWidgetItem(item2)
