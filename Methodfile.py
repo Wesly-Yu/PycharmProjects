@@ -13,10 +13,11 @@ import os
 
 def getFilsName(self, path):
     filenamedict = []
+    root=None
     for root, dirs, files in os.walk(path):
         for file in files:
             filenamedict.append(file)
-    return filenamedict
+    return filenamedict,root
 
 
 

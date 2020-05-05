@@ -7,6 +7,7 @@ import threading
 import os
 from Methodfile import getFilsName
 import  xlwt
+from iterator import increaseNum
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
@@ -21,7 +22,6 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.tree.clicked.connect(self.leftClickScrolToCentrol)
         self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
-        cypressDefaultPath = 'C:\\Users\\Administrator\\cypress\\integration'
 
 
     def iniUI(self):
@@ -92,6 +92,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def openFile(self):
+        global roots
         self.tree.headerItem().setText(0, "工程目录")
         self.tree.setColumnCount(1)
         self.tree.updateEditorData()
@@ -102,7 +103,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         root.setIcon(0, QIcon('./image/Open.png'))
         root.setText(0,DirName)
         root.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
-        filenames = getFilsName(self, Dirpath)
+        filenames,roots = getFilsName(self, Dirpath)
 
         if len(filenames) !=0:
                 for filename in filenames:
@@ -121,7 +122,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         soureceName = str(sourcePath).split('\\')[-1]
         soureceRoot.setIcon(0, QIcon('./image/Open.png'))
         soureceRoot.setText(0, soureceName)
-        filenames = getFilsName(self, sourcePath)
+        filenames,roots = getFilsName(self, sourcePath)
         for filename in filenames:
             child = QTreeWidgetItem(soureceRoot)
             child.setText(0, filename)
@@ -173,16 +174,20 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
     #向用例树中添加测试文件
     def actionAddFileHandler(self):
+        addnumber=str(increaseNum())
+        print(addnumber)
         print(self.tree.currentItem().text(0))
         item = self.tree.currentItem()
-        # renameDirPath =cypressDefaultPath+"\\"+'item'
-        # node = QTreeWidgetItem(item)
-        # node.setText(0,'new.xlsx')
-        # node.setIcon(0, QIcon('./image/New.png'))
-        # node.setCheckState(0, Qt.Unchecked)
-        # workbook = xlwt.Workbook(encoding='utf-8')
-        # sheet1 = workbook.add_sheet('sheet1')
-        # workbook.save(renameDirPath+'\\'+"new.xlsx")
+        addFileroots = roots
+        node = QTreeWidgetItem(item)
+        filename = 'new'+addnumber+'.xlsx'
+        node.setText(0,'new.xlsx')
+        node.setIcon(0, QIcon('./image/New.png'))
+        node.setCheckState(0, Qt.Unchecked)
+        workbook = xlwt.Workbook(encoding='utf-8')
+        sheet1 = workbook.add_sheet('sheet1')
+        workbook.save(addFileroots+'\\'+"new.xlsx")
+        item.emitDataChanged()
 
     #重命名用例树文件夹选定的文件
     def actionRenameDirHandler(self):
