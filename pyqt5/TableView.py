@@ -12,6 +12,8 @@ class QtTableView(QWidget):
         self.setWindowTitle("表格")
         self.resize(800,600)
         self.table=QTableWidget(8,8)
+        self.table.verticalHeader().setVisible(False)
+        self.table.horizontalHeader().setVisible(False)
         layout = QVBoxLayout()
         layout.addWidget(self.table)
         self.setLayout(layout)

@@ -44,6 +44,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setMinimumSize(QtCore.QSize(600, 300))
         self.tableWidget.setRowCount(12)
         self.tableWidget.setColumnCount(9)
+        self.tableWidget.horizontalHeader().setVisible(False)
         self.tableWidget.setObjectName("tableWidget")
         self.gridLayout.addWidget(self.tableWidget, 0, 1, 1, 1)
         self.gridLayout.setColumnStretch(0, 1)

@@ -136,9 +136,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             self.contextMenu = QMenu(self.tree)
             if item.parent() == None:
                 self.actionA = self.contextMenu.addAction(u'新增用例')
-                self.actionC = self.contextMenu.addAction(u'重命名文件夹')
                 self.actionA.triggered.connect(self.actionAddFileHandler)
-                self.actionC.triggered.connect(self.actionRenameDirHandler)
                 self.contextMenu.exec_(self.tree.mapToGlobal(position1))
                 self.contextMenu.show()
             else:
@@ -176,26 +174,41 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def actionAddFileHandler(self):
         counterB= createCounter()
         addnumber = str(counterB())
-        print(addnumber)
         item = self.tree.currentItem()
         addFileroots = roots
         node = QTreeWidgetItem(item)
-        filename = 'new'+addnumber+'.xlsx'
-        print(filename)
+        filename = 'new'+addnumber+'.csv'
         node.setText(0,filename)
         node.setIcon(0, QIcon('./image/New.png'))
         node.setCheckState(0, Qt.Unchecked)
         workbook = xlwt.Workbook(encoding='utf-8')
         sheet1 = workbook.add_sheet('sheet1')
         workbook.save(addFileroots+'\\'+filename)
-        item.emitDataChanged()
 
-    #重命名用例树文件夹选定的文件
     def actionRenameDirHandler(self):
-        print(self.tree.currentItem().text(0))
-        item2 = self.tree2.currentItem()
-        node = QTreeWidgetItem(item2)
-        node.setText(1, 'new')
+        pass
+
+    #重命名用例树中选定的文件
+    def actionRenameFileHandler(self):
+        addFileroots = roots
+        print(addFileroots)
+        item = self.tree.currentItem()
+        node = QTreeWidgetItem(item)
+        oldname = item.text(0)
+        print(oldname)
+        newname,ok = QInputDialog.getText(self,'提示信息','请输入新的文件名')
+        if ok:
+            if len(newname) ==0:
+                QMessageBox.information(self,'提示','文件名不问为空哦')
+            else:
+                node.setText(0,newname)
+                oldFilePath = addFileroots+'/'+oldname
+                print(oldFilePath)
+                newFilePath = addFileroots+'/'+newname
+                print(newFilePath)
+                os.rename(oldFilePath,newFilePath)
+
+
     #删除用例树中不需要的用例
     def actionMoveHandler(self):
         print(self.tree.currentItem().text(0))
@@ -211,9 +224,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             print(item2.child(item2.childCount() - 1).text(0))
             item2.removeChild(item2.child(item2.childCount() - 1))
 
-    #重命名用例树中选定的文件
-    def actionRenameFileHandler(self):
-        pass
+
+
 
 
 
