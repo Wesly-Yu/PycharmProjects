@@ -102,7 +102,6 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         root = QTreeWidgetItem(self.tree)
         root.setIcon(0, QIcon('./image/Open.png'))
         root.setText(0,DirName)
-        root.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
         filenames,roots = getFilsName(self, Dirpath)
 
         if len(filenames) !=0:
@@ -185,17 +184,16 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         sheet1 = workbook.add_sheet('sheet1')
         workbook.save(addFileroots+'\\'+filename)
 
-    def actionRenameDirHandler(self):
-        pass
+    def flashTreeWigetHandler(self):
+        addFileroots = roots
+        self.tree.expandAll()
 
     #重命名用例树中选定的文件
     def actionRenameFileHandler(self):
         addFileroots = roots
-        print(addFileroots)
         item = self.tree.currentItem()
         node = QTreeWidgetItem(item)
         oldname = item.text(0)
-        print(oldname)
         newname,ok = QInputDialog.getText(self,'提示信息','请输入新的文件名')
         if ok:
             if len(newname) ==0:
@@ -203,9 +201,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
             else:
                 node.setText(0,newname)
                 oldFilePath = addFileroots+'/'+oldname
-                print(oldFilePath)
                 newFilePath = addFileroots+'/'+newname
-                print(newFilePath)
                 os.rename(oldFilePath,newFilePath)
 
 
