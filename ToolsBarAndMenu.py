@@ -7,7 +7,7 @@ import threading
 import os
 from Methodfile import getFilsName
 import  xlwt
-from iterator import increaseNum
+from iterator import createCounter
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
@@ -174,19 +174,20 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
     #向用例树中添加测试文件
     def actionAddFileHandler(self):
-        addnumber=str(increaseNum())
+        counterB= createCounter()
+        addnumber = str(counterB())
         print(addnumber)
-        print(self.tree.currentItem().text(0))
         item = self.tree.currentItem()
         addFileroots = roots
         node = QTreeWidgetItem(item)
         filename = 'new'+addnumber+'.xlsx'
-        node.setText(0,'new.xlsx')
+        print(filename)
+        node.setText(0,filename)
         node.setIcon(0, QIcon('./image/New.png'))
         node.setCheckState(0, Qt.Unchecked)
         workbook = xlwt.Workbook(encoding='utf-8')
         sheet1 = workbook.add_sheet('sheet1')
-        workbook.save(addFileroots+'\\'+"new.xlsx")
+        workbook.save(addFileroots+'\\'+filename)
         item.emitDataChanged()
 
     #重命名用例树文件夹选定的文件

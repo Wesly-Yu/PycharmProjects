@@ -1,11 +1,11 @@
 #coding='utf-8'
 
-def increaseNum():
-    f_out = open('num.txt','r+')
-    a=f_out.read()
-    a=int(a)+1
-    f_out.seek(0)#清除内容
-    f_out.truncate()
-    f_out.write(str(a))
-    f_out.close()
-    return a
+s = 0 #设置全局变量
+def createCounter():
+    def counter():
+        global s #引用全局变量
+        s = s+1
+        return s
+    return counter
+
+
