@@ -18,8 +18,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         # self.actionNewFile.triggered.connect(self.FileNew)
         self.actionOpen.triggered.connect(self.openFile)
         self.actionExite.triggered.connect(self.ExitTool)
-        # self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
-        # self.tree.clicked.connect(self.leftClickScrolToCentrol)
+        self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
+        self.tree.clicked.connect(self.leftClickScrolToCentrol)
         # self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
 
@@ -90,8 +90,9 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     #
     #
     def openFile(self):
-        self.treeview1.expandAll()
+        self.tree.expandAll()
         Dirpath = QFileDialog.getExistingDirectory(self,'Open File','./home')
+        print(Dirpath)
         self.root_path=Dirpath
         filter = ['*.xls']
         # Model
@@ -103,14 +104,14 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.proxy = ProxyModel(self.dirModel)
         self.proxy.setSourceModel(self.dirModel)
         self.proxy.root_path = self.root_path
-        self.treeview1.setModel(self.proxy)
+        self.tree.setModel(self.proxy)
         proxy_root_index = self.proxy.mapFromSource(root_index)
-        self.treeview1.setRootIndex(proxy_root_index)
-        self.treeview1.setColumnHidden(1, True)
-        self.treeview1.setColumnHidden(2, True)
-        self.treeview1.setColumnHidden(3, True)
-        self.treeview1.setHeaderHidden(True)
-        self.treeview1.clicked.connect(self.tree_click)
+        self.tree.setRootIndex(proxy_root_index)
+        self.tree.setColumnHidden(1, True)
+        self.tree.setColumnHidden(2, True)
+        self.tree.setColumnHidden(3, True)
+        self.tree.setHeaderHidden(True)
+        self.tree.clicked.connect(self.tree_click)
 
     @pyqtSlot(QModelIndex)
     def tree_click(self, index):
@@ -121,41 +122,43 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         )
     def initFixtureSourece(self):
         username = os.environ['USERNAME']
-        sourcePath='C:\\Users\\'+username+'\\cypress\\fixtures'
-        print(sourcePath)
-        self.treeview2.expandAll()
-    #     soureceRoot = QTreeWidgetItem(self.tree2)
-    #     soureceName = str(sourcePath).split('\\')[-1]
-    #     soureceRoot.setIcon(0, QIcon('./image/Open.png'))
-    #     soureceRoot.setText(0, soureceName)
-    #     filenames,roots = getFilsName(self, sourcePath)
-    #     for filename in filenames:
-    #         child = QTreeWidgetItem(soureceRoot)
-    #         child.setText(0, filename)
-    #         child.setIcon(0, QIcon('./image/New.png'))
-    #         child.setCheckState(0, Qt.Unchecked)
-    #         # child.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+        sourcePath='C:/Users/'+username+'/cypress/fixtures'
+        self.source_path = sourcePath
+        self.dirModel2 = FileTreeSelectorModel(rootpath=self.source_path)
+        self.dirModel2.setRootPath(QDir.rootPath())
+        root_index = self.dirModel2.index(self.source_path).parent()
+        self.proxy2 = ProxyModel(self.dirModel2)
+        self.proxy2.setSourceModel(self.dirModel2)
+        self.proxy2.root_path = self.source_path
+        self.tree2.setModel(self.proxy2)
+        proxy_root_index = self.proxy2.mapFromSource(root_index)
+        self.tree2.setRootIndex(proxy_root_index)
+        self.tree2.setColumnHidden(1, True)
+        self.tree2.setColumnHidden(2, True)
+        self.tree2.setColumnHidden(3, True)
+        self.tree2.setHeaderHidden(True)
+        self.tree2.expandAll()
     # #编辑用例 树框中的数据
-    # def rightClickMenu1(self,position1):
-    #     try:
-    #         item = self.tree.currentItem()
-    #         self.contextMenu = QMenu(self.tree)
-    #         if item.parent() == None:
-    #             self.actionA = self.contextMenu.addAction(u'新增用例')
-    #             self.actionA.triggered.connect(self.actionAddFileHandler)
-    #             self.contextMenu.exec_(self.tree.mapToGlobal(position1))
-    #             self.contextMenu.show()
-    #         else:
-    #             self.actionE = self.contextMenu.addAction(u'重命名文件')
-    #             self.actionB = self.contextMenu.addAction(u'删除选中的文件')
-    #             self.actionB.triggered.connect(self.actionMoveHandler)
-    #             self.actionE.triggered.connect(self.actionRenameFileHandler)
-    #             self.contextMenu.exec_(self.tree.mapToGlobal(position1))
-    #             self.contextMenu.show()
-    #
-    #
-    #     except Exception as e:
-    #         print(e)
+    def rightClickMenu1(self,position1):
+        try:
+            item = self.tree.currentItem()
+            self.contextMenu = QMenu(self.tree)
+            if item.parent() == None:
+                self.actionA = self.contextMenu.addAction(u'新增用例')
+                self.actionA.triggered.connect(self.actionAddFileHandler)
+                self.contextMenu.exec_(self.tree.mapToGlobal(position1))
+                self.contextMenu.show()
+            else:
+                self.actionE = self.contextMenu.addAction(u'重命名文件')
+                self.actionB = self.contextMenu.addAction(u'删除选中的文件')
+                self.actionB.triggered.connect(self.actionMoveHandler)
+                self.actionE.triggered.connect(self.actionRenameFileHandler)
+                self.contextMenu.exec_(self.tree.mapToGlobal(position1))
+                self.contextMenu.show()
+
+
+        except Exception as e:
+            print(e)
     # # 编辑po公共参数 树框中的数据
     # def rightClickMenu2(self,position2):
     #     try:
@@ -176,49 +179,22 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     #     except Exception as e:
     #         print(e)
     #
-    # #向用例树中添加测试文件
-    # def actionAddFileHandler(self):
-    #     counterB= createCounter()
-    #     addnumber = str(counterB())
-    #     item = self.tree.currentItem()
-    #     addFileroots = roots
-    #     print(addFileroots)
-    #     node = QTreeWidgetItem(item)
-    #     filename = 'new'+addnumber+'.xls'
-    #     node.setText(0,filename)
-    #     node.setIcon(0, QIcon('./image/New.png'))
-    #     node.setCheckState(0, Qt.Unchecked)
-    #     workbook = xlwt.Workbook(encoding='utf-8')
-    #     sheet1 = workbook.add_sheet('sheet1')
-    #     workbook.save(addFileroots+'\\'+filename)
-    # def reloadTreeWigetHandler(self):
-    #     addFileroots = roots
-    #
-    # #重命名用例树中选定的文件
-    # def actionRenameFileHandler(self):
-    #     addFileroots = roots
-    #     item = self.tree.currentItem()
-    #     oldname = item.text(0)
-    #     newname,ok = QInputDialog.getText(self,'提示信息','请输入新的文件名')
-    #     if ok:
-    #         if len(newname) ==0:
-    #             QMessageBox.information(self,'提示','文件名不问为空哦')
-    #         else:
-    #             node = QTreeWidgetItem(item)
-    #             node.setText(0,newname)
-    #             oldFilePath = addFileroots+'/'+oldname
-    #             newFilePath = addFileroots+'/'+newname
-    #             os.rename(oldFilePath,newFilePath)
-    #             node.emitDataChanged()
-    #
-    #
-    # #删除用例树中不需要的用例
-    # def actionMoveHandler(self):
-    #     print(self.tree.currentItem().text(0))
-    #     item = self.tree.currentItem()
-    #     for i in range(0, item.childCount()):
-    #         print(item.child(item.childCount() - 1).text(0))
-    #         item.removeChild(item.child(item.childCount() - 1))
+    #向用例树中添加测试文件
+    def actionAddFileHandler(self):
+        pass
+
+
+    #重命名用例树中选定的文件
+    def actionRenameFileHandler(self):
+        pass
+
+    #删除用例树中不需要的用例
+    def actionMoveHandler(self):
+        print(self.tree.currentItem().text(0))
+        item = self.tree.currentItem()
+        for i in range(0, item.childCount()):
+            print(item.child(item.childCount() - 1).text(0))
+            item.removeChild(item.child(item.childCount() - 1))
     # #删除公共参数 框中的文件
     # def actionMoveHandler2(self):
     #     print(self.tree2.currentItem().text(0))

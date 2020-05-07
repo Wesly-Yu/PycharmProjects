@@ -19,7 +19,7 @@ class FileTreeSelectorModel(QtWidgets.QFileSystemModel):
         self.directoryLoaded.connect(self._loaded)
 
     def _loaded(self, path):
-        print('_loaded', self.root_path, self.rowCount(self.parent_index))
+        print('loaded', self.root_path, self.rowCount(self.parent_index))
 
     def data(self, index, role=QtCore.Qt.DisplayRole):
         if role != QtCore.Qt.CheckStateRole:
@@ -124,10 +124,10 @@ class ProxyModel(QSortFilterProxyModel):
 #         )
 
 
-if __name__ == "__main__":
-    import sys
-
-    app = QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#
+#     app = QApplication(sys.argv)
+#     w = MainWindow()
+#     w.show()
+#     sys.exit(app.exec_())
