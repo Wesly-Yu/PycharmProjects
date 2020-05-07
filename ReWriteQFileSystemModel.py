@@ -56,6 +56,9 @@ class FileTreeSelectorModel(QtWidgets.QFileSystemModel):
         print('model printIndex(): {}'.format(self.filePath(index)))
 
 
+
+
+
 class FileTreeSelectorDialog(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -71,11 +74,11 @@ class FileTreeSelectorDialog(QtWidgets.QWidget):
 
         self.setWindowTitle(self.title)         #TODO:  Whilch title?
         self.setGeometry(self.left, self.top, self.width, self.height)
-        filter1 = ['*.txt']
+        # filter1 = ['*.txt']
         # Model
         self.model= FileTreeSelectorModel(rootpath=self.root_path)
         # self.model          = QtWidgets.QFileSystemModel()
-        self.model.setNameFilters(filter1)
+        # self.model.setNameFilters(filter1)
         self.model.setNameFilterDisables(0)
         # View
         self.view= QtWidgets.QTreeView()
@@ -92,7 +95,6 @@ class FileTreeSelectorDialog(QtWidgets.QWidget):
         self.view.setColumnHidden(1, True)
         self.view.setColumnHidden(2, True)
         self.view.setColumnHidden(3, True)
-        self.view.resize(300, 200)
         self.proxy = ProxyModel(self.model)
         self.proxy.setSourceModel(self.model)
         self.proxy.root_path = self.root_path

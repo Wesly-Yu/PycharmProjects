@@ -84,46 +84,44 @@ class ProxyModel(QSortFilterProxyModel):
         self.invalidateFilter()
 
 
-class MainWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.create_treeview()
-        self.setCentralWidget(self.treeView)
-
-    def create_treeview(self):
-
-        self.root_path = "D:/logs"
-
-        self.treeView = QTreeView()
-        self.treeView.setMinimumSize(QSize(400, 200))
-        self.treeView.setMaximumSize(QSize(450, 16777215))
-        self.treeView.setObjectName("treeView")
-
-        self.dirModel = FileTreeSelectorModel(rootpath=self.root_path)
-        self.dirModel.setRootPath(QDir.rootPath())
-        # self.dirModel.setFilter(QDir.NoDotAndDotDot | QDir.AllDirs)
-
-        root_index = self.dirModel.index(self.root_path).parent()
-
-        self.proxy = ProxyModel(self.dirModel)
-        self.proxy.setSourceModel(self.dirModel)
-        self.proxy.root_path = self.root_path
-
-        self.treeView.setModel(self.proxy)
-
-        proxy_root_index = self.proxy.mapFromSource(root_index)
-        self.treeView.setRootIndex(proxy_root_index)
-
-        self.treeView.setHeaderHidden(True)
-        self.treeView.clicked.connect(self.tree_click)
-
-    @pyqtSlot(QModelIndex)
-    def tree_click(self, index):
-        ix = self.proxy.mapToSource(index)
-        print(
-            ix.data(QFileSystemModel.FilePathRole),
-            ix.data(QFileSystemModel.FileNameRole),
-        )
+# class MainWindow(QMainWindow):
+#     def __init__(self, parent=None):
+#         super().__init__(parent)
+#         self.create_treeview()
+#         self.setCentralWidget(self.treeView)
+#
+#     def create_treeview(self):
+#
+#         self.root_path = "D:/logs"
+#
+#         self.treeView = QTreeView()
+#         self.treeView.setObjectName("treeView")
+#
+#         self.dirModel = FileTreeSelectorModel(rootpath=self.root_path)
+#         self.dirModel.setRootPath(QDir.rootPath())
+#         root_index = self.dirModel.index(self.root_path).parent()
+#
+#         self.proxy = ProxyModel(self.dirModel)
+#         self.proxy.setSourceModel(self.dirModel)
+#         self.proxy.root_path = self.root_path
+#
+#         self.treeView.setModel(self.proxy)
+#
+#         proxy_root_index = self.proxy.mapFromSource(root_index)
+#         self.treeView.setRootIndex(proxy_root_index)
+#         self.treeView.setColumnHidden(1, True)
+#         self.treeView.setColumnHidden(2, True)
+#         self.treeView.setColumnHidden(3, True)
+#         self.treeView.setHeaderHidden(True)
+#         self.treeView.clicked.connect(self.tree_click)
+#
+#     @pyqtSlot(QModelIndex)
+#     def tree_click(self, index):
+#         ix = self.proxy.mapToSource(index)
+#         print(
+#             ix.data(QFileSystemModel.FilePathRole),
+#             ix.data(QFileSystemModel.FileNameRole),
+#         )
 
 
 if __name__ == "__main__":

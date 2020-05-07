@@ -2,31 +2,31 @@ from  NewMainWindows import Ui_MainWindow
 from PyQt5 import QtWidgets,QtGui,QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-import threading
-import os
 from Methodfile import getFilsName
 import  xlwt
 from iterator import createCounter
-from  ReWriteQFileSystemModel import FileTreeSelectorModel
+import os
+from  Qtreeview import FileTreeSelectorModel,ProxyModel
+
+
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
         super(ToolsBarAndMenu,self).__init__(parent)
         self.setupUi(self)
         self.iniUI()
         self.initFixtureSourece()
-        self.actionNewFile.triggered.connect(self.FileNew)
+        # self.actionNewFile.triggered.connect(self.FileNew)
         self.actionOpen.triggered.connect(self.openFile)
         self.actionExite.triggered.connect(self.ExitTool)
-        self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
-        self.tree.clicked.connect(self.leftClickScrolToCentrol)
-        self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
+        # self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
+        # self.tree.clicked.connect(self.leftClickScrolToCentrol)
+        # self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
 
 
     def iniUI(self):
-        self.tree = self.treeWidget1
-        self.tree2 = self.treeWidget_2
+        self.tree = self.treeview1
+        self.tree2 = self.treeview2
         self.tree.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree2.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -90,17 +90,40 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     #
     #
     def openFile(self):
-    #     global roots
-        self.tree.expandAll()
+        self.treeview1.expandAll()
         Dirpath = QFileDialog.getExistingDirectory(self,'Open File','./home')
-        filter = ['*.txt']
+        self.root_path=Dirpath
+        filter = ['*.xls']
         # Model
-        self.model = FileTreeSelectorModel(rootpath=self.root_path)
+        self.dirModel = FileTreeSelectorModel(rootpath=self.root_path)
+        self.dirModel.setNameFilters(filter)
+        self.dirModel.setNameFilterDisables(0)
+        self.dirModel.setRootPath(QDir.rootPath())
+        root_index = self.dirModel.index(self.root_path).parent()
+        self.proxy = ProxyModel(self.dirModel)
+        self.proxy.setSourceModel(self.dirModel)
+        self.proxy.root_path = self.root_path
+        self.treeview1.setModel(self.proxy)
+        proxy_root_index = self.proxy.mapFromSource(root_index)
+        self.treeview1.setRootIndex(proxy_root_index)
+        self.treeview1.setColumnHidden(1, True)
+        self.treeview1.setColumnHidden(2, True)
+        self.treeview1.setColumnHidden(3, True)
+        self.treeview1.setHeaderHidden(True)
+        self.treeview1.clicked.connect(self.tree_click)
 
-    # def initFixtureSourece(self):
-    #     sourcePath='C:\\Users\\Administrator\\cypress\\fixtures'
-    #     # self.tree2.setColumnCount(1)
-    #     self.tree2.expandAll()
+    @pyqtSlot(QModelIndex)
+    def tree_click(self, index):
+        ix = self.proxy.mapToSource(index)
+        print(
+            ix.data(QFileSystemModel.FilePathRole),
+            ix.data(QFileSystemModel.FileNameRole),
+        )
+    def initFixtureSourece(self):
+        username = os.environ['USERNAME']
+        sourcePath='C:\\Users\\'+username+'\\cypress\\fixtures'
+        print(sourcePath)
+        self.treeview2.expandAll()
     #     soureceRoot = QTreeWidgetItem(self.tree2)
     #     soureceName = str(sourcePath).split('\\')[-1]
     #     soureceRoot.setIcon(0, QIcon('./image/Open.png'))
