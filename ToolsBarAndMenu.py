@@ -19,7 +19,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.actionOpen.triggered.connect(self.openFile)
         self.actionExite.triggered.connect(self.ExitTool)
         self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
-        self.tree.clicked.connect(self.leftClickScrolToCentrol)
+        # self.tree.clicked.connect(self.leftClickScrolToCentrol)
         # self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
 
@@ -27,7 +27,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def iniUI(self):
         self.tree = self.treeview1
         self.tree2 = self.treeview2
-        self.tree.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.tree.setEditTriggers(self.tree.NoEditTriggers)
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree2.setContextMenuPolicy(Qt.CustomContextMenu)
         self.dialog = QtWidgets.QDialog()
@@ -36,10 +36,10 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
 
-    def leftClickScrolToCentrol(self):
-        item = self.tree.currentItem()
-        self.tree.setCurrentItem(item)
-        self.tree.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+    # def leftClickScrolToCentrol(self):
+    #     item = self.tree.currentItem()
+    #     self.tree.setCurrentItem(item)
+    #     self.tree.scrollToItem(item, QAbstractItemView.PositionAtCenter)
 
 
 
@@ -94,11 +94,12 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         Dirpath = QFileDialog.getExistingDirectory(self,'Open File','./home')
         print(Dirpath)
         self.root_path=Dirpath
-        filter = ['*.xls']
+        filter = ['*.xls','*.xlsx']
         # Model
         self.dirModel = FileTreeSelectorModel(rootpath=self.root_path)
         self.dirModel.setNameFilters(filter)
         self.dirModel.setNameFilterDisables(0)
+        self.dirModel.setReadOnly(False)
         self.dirModel.setRootPath(QDir.rootPath())
         root_index = self.dirModel.index(self.root_path).parent()
         self.proxy = ProxyModel(self.dirModel)
@@ -115,17 +116,18 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
     @pyqtSlot(QModelIndex)
     def tree_click(self, index):
+        global Filepath,Filename
         ix = self.proxy.mapToSource(index)
-        print(
-            ix.data(QFileSystemModel.FilePathRole),
-            ix.data(QFileSystemModel.FileNameRole),
-        )
+        Filepath = ix.data(QFileSystemModel.FilePathRole)
+        Filename = ix.data(QFileSystemModel.FileNameRole)
+
     def initFixtureSourece(self):
         username = os.environ['USERNAME']
         sourcePath='C:/Users/'+username+'/cypress/fixtures'
         self.source_path = sourcePath
         self.dirModel2 = FileTreeSelectorModel(rootpath=self.source_path)
         self.dirModel2.setRootPath(QDir.rootPath())
+        self.dirModel2.setReadOnly(False)
         root_index = self.dirModel2.index(self.source_path).parent()
         self.proxy2 = ProxyModel(self.dirModel2)
         self.proxy2.setSourceModel(self.dirModel2)
@@ -141,21 +143,26 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     # #编辑用例 树框中的数据
     def rightClickMenu1(self,position1):
         try:
-            item = self.tree.currentItem()
-            self.contextMenu = QMenu(self.tree)
-            if item.parent() == None:
-                self.actionA = self.contextMenu.addAction(u'新增用例')
-                self.actionA.triggered.connect(self.actionAddFileHandler)
-                self.contextMenu.exec_(self.tree.mapToGlobal(position1))
-                self.contextMenu.show()
-            else:
-                self.actionE = self.contextMenu.addAction(u'重命名文件')
-                self.actionB = self.contextMenu.addAction(u'删除选中的文件')
-                self.actionB.triggered.connect(self.actionMoveHandler)
-                self.actionE.triggered.connect(self.actionRenameFileHandler)
-                self.contextMenu.exec_(self.tree.mapToGlobal(position1))
-                self.contextMenu.show()
+            print(Filepath)
+            menu = QMenu(self.tree)
+            item = self.tree.indexAt(position1)
+            if os.path.isdir(Filepath):
+                menu.addAction('重命名文件夹')
+                menu.addAction('新增文件')
+                action = menu.exec_(self.tree.mapToGlobal(position1))
+                if action.text() == '重命名文件夹':
+                    self.tree.edit(item)
+                else:
+                    print('new')
 
+            else:
+                menu.addAction('重命名文件')
+                menu.addAction('删除文件')
+                action = menu.exec_(self.tree.mapToGlobal(position1))
+                if action.text() == '重命名文件':
+                    self.tree.edit(item)
+                else:
+                    os.remove(Filepath)
 
         except Exception as e:
             print(e)
