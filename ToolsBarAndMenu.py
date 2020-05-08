@@ -2,7 +2,7 @@ from  NewMainWindows import Ui_MainWindow
 from PyQt5 import QtWidgets,QtGui,QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from Methodfile import getFilsName
+from Methodfile import createNewFile
 import  xlwt
 from iterator import createCounter
 import os
@@ -143,7 +143,6 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     # #编辑用例 树框中的数据
     def rightClickMenu1(self,position1):
         try:
-            print(Filepath)
             menu = QMenu(self.tree)
             item = self.tree.indexAt(position1)
             if os.path.isdir(Filepath):
@@ -153,7 +152,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
                 if action.text() == '重命名文件夹':
                     self.tree.edit(item)
                 else:
-                    print('new')
+                    fileNum = createNewFile(Filepath)
+                    print(fileNum)
 
             else:
                 menu.addAction('重命名文件')
