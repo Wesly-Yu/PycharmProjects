@@ -1,8 +1,6 @@
-import os
-import sys
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import pyqtSlot, QDir, QModelIndex, QSize, QSortFilterProxyModel
-from PyQt5.QtWidgets import QApplication, QFileSystemModel, QMainWindow, QTreeView
+from PyQt5.QtCore import  QSortFilterProxyModel
+from PyQt5.QtWidgets import QFileSystemModel
 
 
 

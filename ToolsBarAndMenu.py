@@ -1,10 +1,9 @@
 from  NewMainWindows import Ui_MainWindow
-from PyQt5 import QtWidgets,QtGui,QtCore
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from Methodfile import createNewFile
 import  xlwt
-from iterator import createCounter
 import os
 from  Qtreeview import FileTreeSelectorModel,ProxyModel
 
