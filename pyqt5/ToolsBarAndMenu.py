@@ -1,11 +1,11 @@
-from  NewMainWindows import Ui_MainWindow
+from pyqt5.NewMainWindows import Ui_MainWindow
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from Methodfile import createNewFile
+from pyqt5.Methodfile import createNewFile
 import  xlwt
 import os
-from  Qtreeview import FileTreeSelectorModel,ProxyModel
+from pyqt5.Qtreeview import FileTreeSelectorModel,ProxyModel
 
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
@@ -188,9 +188,9 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         Filename = ix.data(QFileSystemModel.FileNameRole)
 
     @pyqtSlot(QModelIndex)
-    def tree_click2(self, index):
+    def tree_click2(self, index2):
         global FilePathFixture,FileNameFixture
-        ix2 = self.proxy2.mapToSource(index)
+        ix2 = self.proxy2.mapToSource(index2)
         FilePathFixture = ix2.data(QFileSystemModel.FilePathRole)
         FileNameFixture = ix2.data(QFileSystemModel.FileNameRole)
         print(FilePathFixture)
