@@ -36,4 +36,4 @@ class OperaExcel:
 if __name__=='__main__':
     read_data = OperaExcel()
     print(read_data.get_lines())
-    print(read_data.get_cell(0,1))
+    print(read_data.get_cell(0,0))
