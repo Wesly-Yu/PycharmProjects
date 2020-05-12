@@ -2,11 +2,7 @@ import os
 from utils.ReadExcel import OperaExcel
 
 
-class ActionMethod(OperaExcel):
-    def __init__(self, parent=None):
-        super(ActionMethod, self).__init__(parent)
-        self.read_data = OperaExcel()
-        keyword=self.read_data.get_cell(0, 0)
+class ActionMethod:
 
     def execute_keyword(self,keyword,*args):
         url = str(args[0])
