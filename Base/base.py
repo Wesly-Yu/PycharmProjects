@@ -1,9 +1,8 @@
 import os
-from utils.ReadExcel import OperaExcel
-
-
+from utils.custom_logger import  customLogger as lg
+import logging
 class ActionMethod:
-
+    log = lg.log_utility(logging.INFO)
     def execute_keyword(self,keyword,*args):
         url = str(args[0])
         print(url)
@@ -27,3 +26,7 @@ class ActionMethod:
             element = args[0]
             identify = str(args[1])
             writeKeyWord = "cy.get(" + "'" + element + "'" + ").contain(" + "'" + identify + "'" + ")"
+        else:
+            self.log.info("Bad keyword or not found. All keywords should be in lowercase!!")
+
+
