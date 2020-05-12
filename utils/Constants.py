@@ -7,4 +7,4 @@ class Constants():
                    'reload','and','click picture','wait','request','right click','read file',
                    'equal']
     #Excel_worksheets
-    Sheetname = 0
+    sheedID = 0

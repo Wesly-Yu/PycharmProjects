@@ -36,20 +36,14 @@ class OperaExcel:
         except:
             self.log.error('Failed to get row count')
     #获取单元格内容
-    def get_cell(self,row,colx):
+    def get_cell_data(self,row,colx):
         try:
             data = str(self.get_sheet().cell(row, colx).value)
             return data
         except:
             self.log.error("Failed to get cell data: " + str(row,colx))
-    #
-    def getRowCOntains(self,testcasename,colx,sheedID):
-        RowNum = 0
-        try:
-            rowCount =0
-        except:
-            self.log.error("Row contains check failed")
-        return RowNum
+    #返回测试步骤行数
+    def getTEstStepsCount(self):
 
 if __name__=='__main__':
     read_data = OperaExcel()
