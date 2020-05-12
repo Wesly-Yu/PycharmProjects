@@ -1,7 +1,11 @@
 import xlrd
 import os
+from utils.custom_logger import  customLogger as lg
+import logging
+from utils.Constants import Constants
 class OperaExcel:
-
+    log = lg.log_utility(logging.DEBUG)
+    constants = Constants()
     def __init__(self,excel_path=None):
         if excel_path is None:
             username = os.environ['USERNAME']
@@ -26,12 +30,26 @@ class OperaExcel:
 
     #获取行数
     def get_lines(self):
-        lines = self.get_sheet().nrows
-        return lines
+        try:
+            lines = self.get_sheet().nrows
+            return lines
+        except:
+            self.log.error('Failed to get row count')
     #获取单元格内容
     def get_cell(self,row,colx):
-        data = self.get_sheet().cell(row,colx).value
-        return data
+        try:
+            data = str(self.get_sheet().cell(row, colx).value)
+            return data
+        except:
+            self.log.error("Failed to get cell data: " + str(row,colx))
+    #
+    def getRowCOntains(self,testcasename,colx,sheedID):
+        RowNum = 0
+        try:
+            rowCount =0
+        except:
+            self.log.error("Row contains check failed")
+        return RowNum
 
 if __name__=='__main__':
     read_data = OperaExcel()

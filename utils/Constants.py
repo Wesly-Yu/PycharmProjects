@@ -6,3 +6,5 @@ class Constants():
                    'scrol to view','should','log','clear cookie','contain','get then',
                    'reload','and','click picture','wait','request','right click','read file',
                    'equal']
+    #Excel_worksheets
+    Sheetname = 0
