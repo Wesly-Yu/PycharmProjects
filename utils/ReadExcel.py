@@ -42,10 +42,21 @@ class OperaExcel:
             return data
         except:
             self.log.error("Failed to get cell data: " + str(row,colx))
-    #返回测试步骤行数
-    # def getTestStepsCount(self):
+    #返回测试用例名称
+    def getTestCaseName(self):
+        try:
+            case_name = []
+            lines = self.get_sheet().nrows
+            for line in range(0,lines):
+                test_case_name = str(self.get_sheet().cell(line, 0).value)
+                print(test_case_name)
+            #     if test_case_name !=None:
+            #         case_name.append(test_case_name)
+            # return case_name
+        except:
+            self.log.error("Failed to get testcase name")
+
 
 if __name__=='__main__':
     read_data = OperaExcel()
-    print(read_data.get_lines())
-    print(read_data.get_cell(0,0))
+    print(read_data.getTestCaseName())
