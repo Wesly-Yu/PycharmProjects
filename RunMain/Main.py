@@ -2,7 +2,13 @@
 from utils.ReadExcel import OperaExcel
 from Base.base import ActionMethod
 from utils.CreateJsFile import WriteJsTestFileHead,WriteJsTestFileTail
+from utils.custom_logger import customLogger as lg
+import logging
+import  pytest
 class TestCase:
+
+    log = lg.log_utility(logging.INFO)
+    @pytest.fixture(autouse=True)
     def __init__(self, parent=None):
         super(TestCase, self).__init__(parent)
         self.handle_excel = OperaExcel()

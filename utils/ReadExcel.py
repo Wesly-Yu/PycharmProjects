@@ -43,7 +43,7 @@ class OperaExcel:
         except:
             self.log.error("Failed to get cell data: " + str(row,colx))
     #返回测试步骤行数
-    def getTEstStepsCount(self):
+    # def getTestStepsCount(self):
 
 if __name__=='__main__':
     read_data = OperaExcel()
