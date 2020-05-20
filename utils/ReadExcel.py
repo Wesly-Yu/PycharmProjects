@@ -80,6 +80,18 @@ class OperaExcel:
             return 0
     #获取用例迭代次数
     def getTestIterations(self,testname):
+        try:
+            iterate = 0
+            caselist = self.getTestCaseName()
+            caselist2 = list(set(caselist))
+            CaseList = caselist2.sort(key=caselist.index)
+            iterate = len(CaseList)
+            if iterate >0:
+                return iterate
+            else:
+                return 1
+        except Exception as e:
+            return 1
 
 if __name__=='__main__':
     read_data = OperaExcel()
