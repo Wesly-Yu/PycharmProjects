@@ -9,3 +9,4 @@ class Constants():
     #Excel_worksheets
     sheedID = 0
     sheetname='Sheet1'
+    Col_TestCaseID = 0

@@ -55,7 +55,31 @@ class OperaExcel:
         except:
             self.log.error("Failed to get testcase name")
     #返回用例执行第一步的行号
-
+    def getRowContains(self,testname,ColNum):
+        RowNum = 0
+        try:
+            rowCount = 0
+            rowCount = self.get_lines()
+            for RowNum in range(0, rowCount):
+                if self.get_cell_data(RowNum,ColNum) == testname:
+                    break
+        except:
+            self.log.error("Row contains check failed")
+        return RowNum
+    #返回用例名称对应步骤的最后一行
+    def getTestStepsCount(self,testname,stepstart):
+        try:
+            rowCount = 0
+            rowCount = self.get_lines()
+            i=0
+            for i in range(stepstart, rowCount):
+                if str(testname) !=str(self.get_cell_data(i,self.constants.Col_TestCaseID)):
+                    return i
+        except:
+            self.log.error("Failed to get steps count")
+            return 0
+    #获取用例迭代次数
+    def getTestIterations(self,testname):
 
 if __name__=='__main__':
     read_data = OperaExcel()
