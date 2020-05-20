@@ -5,19 +5,19 @@ from utils.CreateJsFile import WriteJsTestFileHead,WriteJsTestFileTail
 from utils.custom_logger import customLogger as lg
 import logging
 import  pytest
-class TestCase:
+class TestCase():
 
     log = lg.log_utility(logging.INFO)
-    @pytest.fixture(autouse=True)
+    # @pytest.fixture(autouse=True)
     def __init__(self, parent=None):
-        super(TestCase, self).__init__(parent)
+        super(TestCase, self).__init__()
         self.handle_excel = OperaExcel()
         self.action_method = ActionMethod()
-        keyword = self.handle_excel.get_cell(0, 0)
+        keyword = self.handle_excel.get_cell_data(0, 0)
     def run_main(self):
-        case_lines = self.handle_excel.get_lines()
-        for i in  range(1,case_lines):
-            method = self.handle_excel.get_cell(i,0)
+        case_name = self.handle_excel.getTestCaseName()
+        print(case_name)
+
 
 if __name__ == '__main__':
     test = TestCase()

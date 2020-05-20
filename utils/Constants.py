@@ -8,3 +8,4 @@ class Constants():
                    'equal']
     #Excel_worksheets
     sheedID = 0
+    sheetname='Sheet1'

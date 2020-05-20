@@ -49,12 +49,12 @@ class OperaExcel:
             lines = self.get_sheet().nrows
             for line in range(0,lines):
                 test_case_name = str(self.get_sheet().cell(line, 0).value)
-                print(test_case_name)
-            #     if test_case_name !=None:
-            #         case_name.append(test_case_name)
-            # return case_name
+                if test_case_name !=None:
+                    case_name.append(test_case_name)
+            return case_name
         except:
             self.log.error("Failed to get testcase name")
+    #返回用例执行第一步的行号
 
 
 if __name__=='__main__':
