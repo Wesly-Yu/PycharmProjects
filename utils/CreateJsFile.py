@@ -2,7 +2,7 @@
 
 
 def WriteJsTestFileHead(file_path,testfilename):
-    newTestFileName = testfilename.split('.')[0]+'.js'
+    newTestFileName = testfilename +'.js'
     createFile = file_path+'\\'+newTestFileName
     realname = testfilename.split('.')[0]
     with open(createFile,'a+') as files:
@@ -11,7 +11,7 @@ def WriteJsTestFileHead(file_path,testfilename):
         files.write('\t'+'it('+realname+', function() {'+'\n')
 
 def WriteJsTestFileTail(file_path,testfilename):
-    newTestFileName = testfilename.split('.')[0] + '.js'
+    newTestFileName = testfilename + '.js'
     createFile = file_path + '\\' + newTestFileName
     with open(createFile, 'a+') as files:
         files.write('\t'+'})'+'\n')
@@ -19,6 +19,6 @@ def WriteJsTestFileTail(file_path,testfilename):
 
 if __name__ == '__main__':
     file_path = 'D:\logs'
-    testfilename = 'case1.xls'
+    testfilename = 'case1'
     WriteJsTestFileHead(file_path, testfilename)
     WriteJsTestFileTail(file_path, testfilename)

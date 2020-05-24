@@ -5,7 +5,7 @@ from utils.CreateJsFile import WriteJsTestFileHead,WriteJsTestFileTail
 from utils.custom_logger import customLogger as lg
 from utils.Constants import Constants
 import logging
-import  pytest
+# import  pytest
 class TestCase():
 
     log = lg.log_utility(logging.INFO)
@@ -31,7 +31,8 @@ class TestCase():
                 for step in range(nStartStep, nEndStep):
                     nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
                     nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
-                    nElementInput = self.handle_excel
+                    nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
+                    self.action_method.execute_keyword(nActionKeyword,nElementLocator,nElementInput)
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()
