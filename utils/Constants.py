@@ -10,3 +10,6 @@ class Constants():
     sheedID = 0
     sheetname='Sheet1'
     Col_TestCaseID = 0
+    Col_TestKeyWords=1
+    Col_TestLocator=2
+    Col_TestInput=3

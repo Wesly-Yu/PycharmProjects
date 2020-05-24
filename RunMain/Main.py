@@ -29,8 +29,9 @@ class TestCase():
                 nEndStep = self.handle_excel.getTestStepsCount(testcasename,nStartStep)
                 print(nEndStep)
                 for step in range(nStartStep, nEndStep):
-
-
+                    nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
+                    nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
+                    nElementInput = self.handle_excel
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()
