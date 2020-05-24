@@ -6,11 +6,15 @@ from utils.custom_logger import customLogger as lg
 from utils.Constants import Constants
 import logging
 # import  pytest
+import os
 class TestCase():
 
     log = lg.log_utility(logging.INFO)
     # @pytest.fixture(autouse=True)
     def __init__(self, parent=None):
+        global sourcePath
+        username = os.environ['USERNAME']
+        sourcePath = 'C:/Users/' + username + '/cypress/integration'
         super(TestCase, self).__init__()
         self.handle_excel = OperaExcel()
         self.action_method = ActionMethod()
@@ -22,6 +26,7 @@ class TestCase():
         for ntestCase in range(1,iterates):
             #将用例列表中的 用例一一取出
             for testcasename in testcaselists:
+                WriteJsTestFileHead(sourcePath, testcasename)
                 #返回用例名称对应的第一个行id
                 nStartStep = self.handle_excel.getRowContains(testcasename,self.constants.Col_TestCaseID)
                 print(nStartStep)
@@ -33,6 +38,7 @@ class TestCase():
                     nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
                     nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
                     self.action_method.execute_keyword(nActionKeyword,nElementLocator,nElementInput)
+                WriteJsTestFileTail(sourcePath, testcasename)
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()
