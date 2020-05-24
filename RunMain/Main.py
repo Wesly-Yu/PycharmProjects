@@ -28,6 +28,8 @@ class TestCase():
                 # 返回用例名称对应的最后一行id
                 nEndStep = self.handle_excel.getTestStepsCount(testcasename,nStartStep)
                 print(nEndStep)
+                for step in range(nStartStep, nEndStep):
+
 
 if __name__ == '__main__':
     test = TestCase()
