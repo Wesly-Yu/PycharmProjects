@@ -15,8 +15,7 @@ class TestCase():
         self.action_method = ActionMethod()
         keyword = self.handle_excel.get_cell_data(0, 0)
     def run_main(self):
-        case_name = self.handle_excel.getTestCaseName()
-        print(case_name)
+        iterate=self.handle_excel.getTestIterations()
 
 
 if __name__ == '__main__':

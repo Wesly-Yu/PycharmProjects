@@ -1,5 +1,6 @@
 import xlrd
 import os
+import itertools
 from utils.custom_logger import  customLogger as lg
 import logging
 from utils.Constants import Constants
@@ -79,13 +80,16 @@ class OperaExcel:
             self.log.error("Failed to get steps count")
             return 0
     #获取用例迭代次数
-    def getTestIterations(self,testname):
+    def getTestIterations(self):
+        iterate = 0
         try:
-            iterate = 0
             caselist = self.getTestCaseName()
-            caselist2 = list(set(caselist))
-            CaseList = caselist2.sort(key=caselist.index)
-            iterate = len(CaseList)
+            caselist.sort()
+            l=[]
+            it = itertools.groupby(caselist)
+            for k,g in it:
+                l.append(k)
+            iterate = len(l)
             if iterate >0:
                 return iterate
             else:
@@ -95,4 +99,4 @@ class OperaExcel:
 
 if __name__=='__main__':
     read_data = OperaExcel()
-    print(read_data.getTestCaseName())
+    print(read_data.getTestIterations())
