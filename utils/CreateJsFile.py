@@ -17,8 +17,8 @@ def WriteJsTestFileTail(file_path,testfilename):
         files.write('\t'+'})'+'\n')
         files.write('})'+'\n')
 
-if __name__ == '__main__':
-    file_path = 'D:\logs'
-    testfilename = 'case1'
-    WriteJsTestFileHead(file_path, testfilename)
-    WriteJsTestFileTail(file_path, testfilename)
+# if __name__ == '__main__':
+#     file_path = 'D:\logs'
+#     testfilename = 'case1'
+#     WriteJsTestFileHead(file_path, testfilename)
+#     WriteJsTestFileTail(file_path, testfilename)

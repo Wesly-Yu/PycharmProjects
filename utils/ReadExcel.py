@@ -11,7 +11,7 @@ class OperaExcel:
         if excel_path is None:
             username = os.environ['USERNAME']
             # sourcePath = 'C:/Users/' + username + '/cypress/fixtures/new1.xls'
-            sourcePath = 'D:/logs/new1.xls'
+            sourcePath = 'D:\\log\\new1.xls'
             self.excel_path =sourcePath
         else:
             self.excel_path = excel_path
@@ -97,6 +97,6 @@ class OperaExcel:
         except Exception as e:
             return 1
 
-if __name__=='__main__':
-    read_data = OperaExcel()
-    print(read_data.getTestIterations())
+# if __name__=='__main__':
+#     read_data = OperaExcel()
+#     print(read_data.getTestIterations())
