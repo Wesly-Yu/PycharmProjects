@@ -16,9 +16,18 @@ def WriteJsTestFileTail(file_path,testfilename):
     with open(createFile, 'a+') as files:
         files.write('\t'+'})'+'\n')
         files.write('})'+'\n')
+def WriteJsTestSteps(file_path,testfilename,steps):
+    newTestFileName = testfilename + '.js'
+    createFile = file_path + '\\' + newTestFileName
+    with open(createFile, 'a+') as files:
+        files.write('\t'+'\t'+steps+'\n')
+
 
 # if __name__ == '__main__':
-#     file_path = 'D:\logs'
-#     testfilename = 'case1'
+#     file_path = 'D:\log'
+#     testfilename = 'case2'
+#     url="www.baicu.com"
+#     steps="cy.visit("+"'"+url+"'"+")"
 #     WriteJsTestFileHead(file_path, testfilename)
+#     WriteJsTestSteps(file_path, testfilename, steps)
 #     WriteJsTestFileTail(file_path, testfilename)

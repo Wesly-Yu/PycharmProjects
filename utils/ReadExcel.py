@@ -47,12 +47,16 @@ class OperaExcel:
     def getTestCaseName(self):
         try:
             case_name = []
+            case_list = []
             lines = self.get_sheet().nrows
             for line in range(0,lines):
                 test_case_name = str(self.get_sheet().cell(line, 0).value)
                 if test_case_name !=None:
                     case_name.append(test_case_name)
-            return case_name
+                    for  j in case_name:
+                        if j not in case_list:
+                            case_list.append(j)
+            return case_list
         except:
             self.log.error("Failed to get testcase name")
     #返回用例执行第一步的行号
@@ -97,6 +101,6 @@ class OperaExcel:
         except Exception as e:
             return 1
 
-# if __name__=='__main__':
-#     read_data = OperaExcel()
-#     print(read_data.getTestIterations())
+if __name__=='__main__':
+    read_data = OperaExcel()
+    print(read_data.getTestCaseName())

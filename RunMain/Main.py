@@ -23,22 +23,20 @@ class TestCase():
     def run_main(self):
         iterates=self.handle_excel.getTestIterations()
         testcaselists=self.handle_excel.getTestCaseName()
-        for ntestCase in range(1,iterates):
+        for ntestCase in range(1,iterates+1):
             #将用例列表中的 用例一一取出
             for testcasename in testcaselists:
                 WriteJsTestFileHead(sourcePath, testcasename)
                 #返回用例名称对应的第一个行id
                 nStartStep = self.handle_excel.getRowContains(testcasename,self.constants.Col_TestCaseID)
-                print(nStartStep)
                 # 返回用例名称对应的最后一行id
                 nEndStep = self.handle_excel.getTestStepsCount(testcasename,nStartStep)
-                print(nEndStep)
-                for step in range(nStartStep, nEndStep):
+                for step in range(nStartStep, nEndStep+1):
                     nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
                     nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
                     nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
-                    self.action_method.execute_keyword(nActionKeyword,nElementLocator,nElementInput)
-                WriteJsTestFileTail(sourcePath, testcasename)
+                    self.action_method.execute_keyword(sourcePath,testcasename,nActionKeyword,nElementLocator,nElementInput)
+            WriteJsTestFileTail(sourcePath, testcasename)
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()
