@@ -12,7 +12,6 @@ class ActionMethod:
         element = None
         if str(keyword).lower()=='open browser':
             url = str(args[0])
-            print(url)
             writeKeyWord = "cy.visit("+"'"+url+"'"+")"
             WriteJsTestSteps(file_path,testfilename,writeKeyWord)
         elif str(keyword).lower() == 'click':

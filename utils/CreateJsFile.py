@@ -8,7 +8,7 @@ def WriteJsTestFileHead(file_path,testfilename):
     with open(createFile,'a+') as files:
         files.seek(0)
         files.write("describe('developer',function () {"+'\n')
-        files.write('\t'+'it('+realname+', function() {'+'\n')
+        files.write('\t'+'it('+'"'+realname+'"'+', function() {'+'\n')
 
 def WriteJsTestFileTail(file_path,testfilename):
     newTestFileName = testfilename + '.js'

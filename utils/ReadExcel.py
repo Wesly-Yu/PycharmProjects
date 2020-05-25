@@ -47,16 +47,13 @@ class OperaExcel:
     def getTestCaseName(self):
         try:
             case_name = []
-            case_list = []
             lines = self.get_sheet().nrows
             for line in range(0,lines):
                 test_case_name = str(self.get_sheet().cell(line, 0).value)
                 if test_case_name !=None:
                     case_name.append(test_case_name)
-                    for  j in case_name:
-                        if j not in case_list:
-                            case_list.append(j)
-            return case_list
+
+            return case_name
         except:
             self.log.error("Failed to get testcase name")
     #返回用例执行第一步的行号
@@ -74,12 +71,13 @@ class OperaExcel:
     #返回用例名称对应步骤的最后一行
     def getTestStepsCount(self,testname,stepstart):
         try:
-            rowCount = 0
-            rowCount = self.get_lines()
             i=0
+            rowCount = self.get_lines()
+            casenamelist = self.getTestCaseName()
             for i in range(stepstart, rowCount):
-                if str(testname) !=str(self.get_cell_data(i,self.constants.Col_TestCaseID)):
-                    return i
+                for casename in casenamelist:
+                    if str(testname) != casename:
+                        return i+1
         except:
             self.log.error("Failed to get steps count")
             return 0
@@ -103,4 +101,5 @@ class OperaExcel:
 
 if __name__=='__main__':
     read_data = OperaExcel()
-    print(read_data.getTestCaseName())
+    testname ='new2'
+    print(read_data.getTestStepsCount(testname,4))
