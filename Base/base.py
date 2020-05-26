@@ -36,7 +36,7 @@ class ActionMethod:
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         elif str(keyword).lower() == 'log':
             context = str(args[1])
-            if context.split('#')[1] !=None:
+            if context.startswith("#"):
                 writeKeyWord = "cy.log(" +context +")"
                 WriteJsTestSteps(file_path, testfilename, writeKeyWord)
             else:
