@@ -5,7 +5,7 @@ def WriteJsTestFileHead(file_path,testfilename):
     newTestFileName = testfilename +'.js'
     createFile = file_path+'\\'+newTestFileName
     realname = testfilename.split('.')[0]
-    with open(createFile,'a+') as files:
+    with open(createFile,'a+',encoding='utf-8') as files:
         files.seek(0)
         files.write("describe('developer',function () {"+'\n')
         files.write('\t'+'it('+'"'+realname+'"'+', function() {'+'\n')
@@ -13,13 +13,13 @@ def WriteJsTestFileHead(file_path,testfilename):
 def WriteJsTestFileTail(file_path,testfilename):
     newTestFileName = testfilename + '.js'
     createFile = file_path + '\\' + newTestFileName
-    with open(createFile, 'a+') as files:
+    with open(createFile, 'a+',encoding='utf-8') as files:
         files.write('\t'+'})'+'\n')
         files.write('})'+'\n')
 def WriteJsTestSteps(file_path,testfilename,steps):
     newTestFileName = testfilename + '.js'
     createFile = file_path + '\\' + newTestFileName
-    with open(createFile, 'a+') as files:
+    with open(createFile, 'a+',encoding='utf-8') as files:
         files.write('\t'+'\t'+steps+'\n')
 
 
