@@ -36,7 +36,7 @@ class TestCase():
             nStartStep = self.handle_excel.getRowContains(TestCase_List[iterate],self.constants.Col_TestCaseID)
             # 返回用例名称对应的最后一行id
             nEndStep = self.handle_excel.getTestStepsCount(TestCase_List[iterate],nStartStep)
-            for step in range(nStartStep, nEndStep):
+            for step in range(nStartStep, nEndStep+1):
                 nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
                 nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
                 nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
