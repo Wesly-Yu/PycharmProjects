@@ -41,6 +41,32 @@ class ActionMethod:
             else:
                 writeKeyWord = "cy.log(" + "'" + context + "'" + ")"
                 WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='clear':
+            element = args[0]
+            writeKeyWord = "cy.get(" + "'" + element + "'" + ").clear"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='clearcookies':
+            writeKeyWord = "cy.clearCookies()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='double click':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").dblclick()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='scrol to view':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='should':
+            element = args[0]
+            asset = args[1]
+            asset_text = args[2]
+            if asset_text ==None:
+                writeKeyWord = "cy.get("+"'"+element+"'"+").should("+"'"+asset+"'"+")"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+            else:
+                writeKeyWord = "cy.get(" + "'" + element + "'" + ").should(" + "'" + asset + "'"+"," + "'" + asset_text + "'"+")"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+
         else:
             self.log.info("Bad keyword or not found. All keywords should be in lowercase!!")
 
