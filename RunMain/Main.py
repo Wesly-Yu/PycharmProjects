@@ -27,20 +27,21 @@ class TestCase():
         for  j in testcaselists:
             if j not in TestCase_List:
                 TestCase_List.append(j)
-        # for ntestCase in range(1,iterates):
+        for iterate in range(1,iterates+1):
         #将用例列表中的 用例一一取出
-        for testcasename in TestCase_List:
-            WriteJsTestFileHead(sourcePath, testcasename)
+        # global  testcasename
+        # for testcasename in TestCase_List:
+            WriteJsTestFileHead(sourcePath, TestCase_List[iterate])
             #返回用例名称对应的第一个行id
-            nStartStep = self.handle_excel.getRowContains(testcasename,self.constants.Col_TestCaseID)
+            nStartStep = self.handle_excel.getRowContains(TestCase_List[iterate],self.constants.Col_TestCaseID)
             # 返回用例名称对应的最后一行id
-            nEndStep = self.handle_excel.getTestStepsCount(testcasename,nStartStep)
+            nEndStep = self.handle_excel.getTestStepsCount(TestCase_List[iterate],nStartStep)
             for step in range(nStartStep, nEndStep):
                 nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
                 nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)
                 nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
-                self.action_method.execute_keyword(sourcePath,testcasename,nActionKeyword,nElementLocator,nElementInput)
-            WriteJsTestFileTail(sourcePath, testcasename)
+                self.action_method.execute_keyword(sourcePath,TestCase_List[iterate],nActionKeyword,nElementLocator,nElementInput)
+            WriteJsTestFileTail(sourcePath,TestCase_List[iterate])
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()

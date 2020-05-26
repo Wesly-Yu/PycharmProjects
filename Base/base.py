@@ -24,6 +24,7 @@ class ActionMethod:
             writeKeyWord ="cy.get("+"'"+element+"'"+",{timeout:"+timeout+"}).click()"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         elif str(keyword).lower() == 'input text':
+            print('+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+')
             element = args[0]
             context =str(args[1])
             writeKeyWord = "cy.get("+"'"+element+"'"+").type("+"'"+context+"'"+")"
@@ -33,6 +34,14 @@ class ActionMethod:
             identify = str(args[1])
             writeKeyWord = "cy.get(" + "'" + element + "'" + ").contain(" + "'" + identify + "'" + ")"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() == 'log':
+            context = str(args[1])
+            if context.split('$')[1] !=None:
+                writeKeyWord = "cy.log(" +context +")"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+            else:
+                writeKeyWord = "cy.log(" + "'" + context + "'" + ")"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         else:
             self.log.info("Bad keyword or not found. All keywords should be in lowercase!!")
 

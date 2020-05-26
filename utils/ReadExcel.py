@@ -11,7 +11,7 @@ class OperaExcel:
         if excel_path is None:
             username = os.environ['USERNAME']
             # sourcePath = 'C:/Users/' + username + '/cypress/fixtures/new1.xls'
-            sourcePath = 'D:\\log\\new1.xls'
+            sourcePath = 'D:\\log\\testcase.xlsx'
             self.excel_path =sourcePath
         else:
             self.excel_path = excel_path
@@ -75,9 +75,12 @@ class OperaExcel:
             rowCount = self.get_lines()
             casenamelist = self.getTestCaseName()
             for i in range(stepstart, rowCount):
-                for casename in casenamelist:
-                    if str(testname) != casename:
-                        return i+1
+                if testname != casenamelist[i]:
+                    return i
+                # for casename in casenamelist:
+                #     print(casename)
+                #     if testname != casename:
+                #         return i
         except:
             self.log.error("Failed to get steps count")
             return 0
@@ -101,5 +104,5 @@ class OperaExcel:
 
 if __name__=='__main__':
     read_data = OperaExcel()
-    testname ='new2'
-    print(read_data.getTestStepsCount(testname,4))
+    testname ='new3'
+    print(read_data.getTestStepsCount(testname,3))
