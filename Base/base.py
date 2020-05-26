@@ -86,14 +86,18 @@ class ActionMethod:
             element = args[0]
             writeKeyWord = ".and("+"'"+element+"'"+")"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
-        elif str(keyword).lower() =='scrol to view':
+        elif str(keyword).lower() =='children':
             element = args[0]
-            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            writeKeyWord = "cy.get("+"'"+element+"'"+").children()"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
-        elif str(keyword).lower() =='scrol to view':
+        elif str(keyword).lower() =='right click':
             element = args[0]
-            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
-            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+            if element !=None:
+                writeKeyWord = "cy.get("+"'"+element+"'"+").rightclick()"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+            else:
+                writeKeyWord = ".rightclick()"
+                WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         elif str(keyword).lower() =='scrol to view':
             element = args[0]
             writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"

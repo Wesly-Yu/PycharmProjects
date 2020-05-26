@@ -5,7 +5,7 @@ class Constants():
     KeyWordList = ['open browser','click','input text','clear','double click',
                    'scrol to view','should','log','clearcookies','contain','get then',
                    'reload','and','click picture','wait','request','right click','read file',
-                   'equal']
+                   'equal','children']
     #Excel_worksheets
     sheedID = 0
     sheetname='Sheet1'
