@@ -24,7 +24,6 @@ class ActionMethod:
             writeKeyWord ="cy.get("+"'"+element+"'"+",{timeout:"+timeout+"}).click()"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         elif str(keyword).lower() == 'input text':
-            print('+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\+')
             element = args[0]
             context =str(args[1])
             writeKeyWord = "cy.get("+"'"+element+"'"+").type("+"'"+context+"'"+")"

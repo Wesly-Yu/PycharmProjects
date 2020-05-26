@@ -31,7 +31,6 @@ class TestCase():
         #将用例列表中的 用例一一取出
         global  testcasename
         for testcasename in TestCase_List:
-            print(testcasename)
             WriteJsTestFileHead(sourcePath, testcasename)
             #返回用例名称对应的第一个行id
             nStartStep = self.handle_excel.getRowContains(testcasename,self.constants.Col_TestCaseID)

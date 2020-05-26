@@ -78,7 +78,7 @@ class OperaExcel:
                 if str(testname) != str(casenamelist[i]):
                     return i
                 elif testname == casenamelist[-1]:
-                    return len(casenamelist)-1
+                    return len(casenamelist)
 
         except:
             self.log.error("Failed to get steps count")
