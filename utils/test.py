@@ -1,5 +1,5 @@
 element = "#wd"
 asset = 'eq'
-asset_text = 'bar'
-writeKeyWord = "cy.get(" + "'" + element + "'" + ").should(" + "'" + asset + "'"+"," + "'" + asset_text + "'"+")"
+time = '500'
+writeKeyWord = "cy.get("+time+")"
 print(writeKeyWord)

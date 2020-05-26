@@ -66,7 +66,38 @@ class ActionMethod:
             else:
                 writeKeyWord = "cy.get(" + "'" + element + "'" + ").should(" + "'" + asset + "'"+"," + "'" + asset_text + "'"+")"
                 WriteJsTestSteps(file_path, testfilename, writeKeyWord)
-
+        elif str(keyword).lower() =='contain':
+            element = args[0]
+            context = args[1]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").contain(" + "'" + context + "'" + ")"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='contain':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='reload':
+            writeKeyWord = "cy.reload()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='wait':
+            element = args[0]
+            writeKeyWord = "cy.wait("+element+")"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='and':
+            element = args[0]
+            writeKeyWord = ".and("+"'"+element+"'"+")"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='scrol to view':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='scrol to view':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='scrol to view':
+            element = args[0]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         else:
             self.log.info("Bad keyword or not found. All keywords should be in lowercase!!")
 
