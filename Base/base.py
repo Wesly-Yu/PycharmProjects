@@ -98,9 +98,14 @@ class ActionMethod:
             else:
                 writeKeyWord = ".rightclick()"
                 WriteJsTestSteps(file_path, testfilename, writeKeyWord)
-        elif str(keyword).lower() =='scrol to view':
+        elif str(keyword).lower() =='read file':
             element = args[0]
-            writeKeyWord = "cy.get("+"'"+element+"'"+").scrollIntoView()"
+            writeKeyWord = "cy.readFile("+"'"+element+"'"+")."
+            WriteJsTestSteps(file_path, testfilename, writeKeyWord)
+        elif str(keyword).lower() =='equal':
+            element = args[0]
+            number = args[1]
+            writeKeyWord = "cy.get("+"'"+element+"'"+").eq("+number+")"
             WriteJsTestSteps(file_path, testfilename, writeKeyWord)
         else:
             self.log.info("Bad keyword or not found. All keywords should be in lowercase!!")
