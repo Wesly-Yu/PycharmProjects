@@ -43,6 +43,7 @@ class TestCase():
                 nElementInput = self.handle_excel.get_cell_data(step,self.constants.Col_TestInput)
                 self.action_method.execute_keyword(sourcePath,testcasename,nActionKeyword,nElementLocator,nElementInput)
             WriteJsTestFileTail(sourcePath,testcasename)
+            self.log.info("*********************Write JS file Success*********************")
 if __name__ == '__main__':
     test = TestCase()
     test.run_main()
