@@ -4,12 +4,10 @@ from Base.base import ActionMethod
 from utils.CreateJsFile import WriteJsTestFileHead,WriteJsTestFileTail
 from utils.custom_logger import customLogger as lg
 from utils.Constants import Constants
-import logging
-# import  pytest
 import os
 class TestCase():
 
-    log = lg.log_utility(logging.INFO)
+    log = lg.log_utility()
     # @pytest.fixture(autouse=True)
     def __init__(self, parent=None):
         global sourcePath
@@ -36,6 +34,9 @@ class TestCase():
             nStartStep = self.handle_excel.getRowContains(testcasename,self.constants.Col_TestCaseID)
             # 返回用例名称对应的最后一行id
             nEndStep = self.handle_excel.getTestStepsCount(testcasename,nStartStep)
+            self.log.info("*****************************************************************************************************")
+            self.log.info("Test case: " + str(testcasename))
+            self.log.info("************************************************************************")
             for step in range(nStartStep, nEndStep):
                 nActionKeyword = self.handle_excel.get_cell_data(step,self.constants.Col_TestKeyWords)
                 nElementLocator = self.handle_excel.get_cell_data(step,self.constants.Col_TestLocator)

@@ -5,7 +5,7 @@ from utils.custom_logger import  customLogger as lg
 import logging
 from utils.Constants import Constants
 class OperaExcel:
-    log = lg.log_utility(logging.DEBUG)
+    log = lg.log_utility()
     constants = Constants()
     def __init__(self,excel_path=None):
         if excel_path is None:
