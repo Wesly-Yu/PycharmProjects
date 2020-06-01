@@ -5,7 +5,9 @@ from functools import wraps
 import pywintypes  # noqa
 import win32api
 import time
-from airtest_selenium.helper import G,logwrap
+from pykeyboard import PyKeyboard
+from opencv.exceptions import IsNotTemplateError
+from opencv.helper import G,logwrap
 from pywinauto.application import Application
 from pywinauto import mouse, keyboard
 from pywinauto.win32structures import RECT
@@ -20,7 +22,7 @@ from airtest.utils.transform import TargetPos
 from airtest.aircv.template_matching import TemplateMatching
 from airtest.aircv.keypoint_matching import KAZEMatching, BRISKMatching, AKAZEMatching, ORBMatching
 from airtest.aircv.keypoint_matching_contrib import SIFTMatching, SURFMatching, BRIEFMatching
-from airtest_selenium.cv import Template
+from opencv.cv import Template
 
 MATCHING_METHODS = {
     "tpl": TemplateMatching,
@@ -394,6 +396,33 @@ class Windows(Device):
         pos = (int((pos[0] + rect.left + self._focus_rect[0]) * self._dpifactor),
                int((pos[1] + rect.top + self._focus_rect[1]) * self._dpifactor))
         return pos
+
+    # 点击输入框等，然后输入字符串
+    def input_text(self, pos, text):
+        self.touch(pos)
+        self.pykeyboard.type_string(text)
+
+    @logwrap
+    def assert_template(self, v, msg=""):
+        """
+        Assert target exists on the current page.
+
+        Args:
+            v: target to touch, either a Template instance
+        Raise:
+            AssertionError - if target not found.
+        Returns:
+            Position of the template.
+        """
+        if isinstance(v, Template):
+            try:
+                pos = self.loop_find(v, timeout=ST.FIND_TIMEOUT)
+            except TargetNotFoundError:
+                raise AssertionError("Target template not found on screen.")
+            else:
+                return pos
+        else:
+            raise IsNotTemplateError("args is not a template")
 '''----------------------------------------------------------------------------------------------------'''
 
 
