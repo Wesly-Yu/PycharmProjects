@@ -58,6 +58,7 @@ class Windows(Device):
         self._focus_rect = (0, 0, 0, 0)
         self.mouse = mouse
         self.keyboard = keyboard
+        self.pykeyboard = PyKeyboard()
         self.screen = mss()
         self.monitor = self.screen.monitors[0]  # 双屏的时候，self.monitor为整个双屏
         self.main_monitor = self.screen.monitors[1]  # 双屏的时候，self.main_monitor为主屏
