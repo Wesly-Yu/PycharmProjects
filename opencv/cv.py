@@ -11,7 +11,7 @@ from copy import deepcopy
 from airtest.aircv.template_matching import TemplateMatching
 from airtest.aircv.keypoint_matching import KAZEMatching, BRISKMatching, AKAZEMatching, ORBMatching
 from airtest.aircv.keypoint_matching_contrib import SIFTMatching, SURFMatching, BRIEFMatching
-from airtest_selenium.helper import G,logwrap
+from opencv.helper import G,logwrap
 from airtest.core.settings import Settings as ST  # noqa
 from airtest.core.error import TargetNotFoundError, InvalidMatchingMethodError
 from airtest.utils.transform import TargetPos
@@ -167,7 +167,7 @@ class Template(object):
             # get function definition and execute:
             func = MATCHING_METHODS.get(method, None)
             if func is None:
-                raise InvalidMatchingMethodError("Undefined method in CVSTRATEGY: '%s', try 'kaze'/'brisk'/'akaze'/'orb'/'surf'/'sift'/'brief' instead." % method)
+                raise InvalidMatchingMethodError("Undefined method in CVSTRATEGY: '%s', try 'kaze'/'sift'/'surf'/'brisk'/'akaze'/'orb'/'brief' instead." % method)
             else:
                 ret = self._try_match(func, image, screen, threshold=self.threshold, rgb=self.rgb)
             if ret:
