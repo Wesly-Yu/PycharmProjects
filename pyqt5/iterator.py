@@ -1,11 +1,15 @@
 #coding='utf-8'
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import  QSortFilterProxyModel
+from PyQt5.QtWidgets import QFileSystemModel
 
-s = 0 #设置全局变量
-def createCounter():
-    def counter():
-        global s #引用全局变量
-        s = s+1
-        return s
-    return counter
 
+
+
+class FileTreeSelectorModel(QtWidgets.QFileSystemModel):
+    def __init__(self, parent=None, rootpath='/'):
+        QtWidgets.QFileSystemModel.__init__(self, None)
+        # self.setFilter(QtCore.QDir.AllEntries | QtCore.QDir.Hidden | QtCore.QDir.NoDot)
+
+    # def treeview(self):
 
