@@ -4,15 +4,17 @@ import sys
 import os
 import qdarkstyle
 from PyQt5 import QtGui, QtCore,QtWidgets
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import *
 
 
 class MyListModel(QtCore.QAbstractListModel):
     def __init__(self, datain, parent=None, *args):
         """ datain: a list where each item is a row
         """
+        # self.ListItemData = []
         QtCore.QAbstractListModel.__init__(self, parent, *args)
         self.listdata = datain
-        # index = self.selectedIndexes()
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.listdata)
 
@@ -21,34 +23,48 @@ class MyListModel(QtCore.QAbstractListModel):
         if index.isValid() and role == QtCore.Qt.DecorationRole:
             return QtGui.QIcon(QtGui.QPixmap(self.listdata[index.row()]))
         if index.isValid() and role == QtCore.Qt.DisplayRole:
+            # print(QtCore.QVariant(self.ListItemData[index.row()]['name']))
             return QtCore.QVariant(os.path.splitext(os.path.split(self.listdata[index.row()])[-1])[0])
         else:
             return QtCore.QVariant()
 
+    def getItem(self, index):
+        if index > -1 and index < len(self.ListItemData):
+            return self.ListItemData[index]
+
 class MyListView(QtWidgets.QListView):
     """docstring for MyListView"""
-    def __init__(self):
-        super(MyListView, self).__init__()
-        # show in Icon Mode
+    def __init__(self,parent=None):
+        super(MyListView, self).__init__(parent)
+        self.Listview = QListView()
         self.setViewMode(QtWidgets.QListView.IconMode)
         self.setIconSize(QtCore.QSize(90, 90))
-        self.setGridSize(QtCore.QSize(100, 100))
-        crntDir = "D:/log"
-        # create table
+        self.setGridSize(QtCore.QSize(110, 110))
+
+        crntDir = "D:\\log"
         list_data = []
         philes = os.listdir(crntDir)
         for phile in philes:
             if phile.endswith(".png"):
                 list_data.append(os.path.join(crntDir, phile))
-        lm = MyListModel(list_data, self)
+        self.List_data = list_data
+
+        print(self.List_data)
+        lm = MyListModel(list_data)
         self.setModel(lm)
         self.show()
+        self.clicked.connect(self.onclicked)
+
+    def onclicked(self,item):
+        QMessageBox.information(self,"selected :",self.List_data[item.row()])
+
+
 
 
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    window =  MyListView()
+    window = MyListView()
     # window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
     window.setWindowOpacity(0.9)
     window.show()
