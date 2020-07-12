@@ -56,7 +56,9 @@ class MyListView(QtWidgets.QListView):
         self.clicked.connect(self.onclicked)
 
     def onclicked(self,item):
-        QMessageBox.information(self,"selected :",self.List_data[item.row()])
+        image_selected_path = self.List_data[item.row()]
+        print(image_selected_path)
+        self.close()
 
 
 
@@ -65,7 +67,7 @@ class MyListView(QtWidgets.QListView):
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = MyListView()
-    # window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
+    window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
     window.setWindowOpacity(0.9)
     window.show()
     window.raise_()
