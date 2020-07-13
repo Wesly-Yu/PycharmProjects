@@ -12,7 +12,6 @@ class MyListModel(QtCore.QAbstractListModel):
     def __init__(self, datain, parent=None, *args):
         """ datain: a list where each item is a row
         """
-        # self.ListItemData = []
         QtCore.QAbstractListModel.__init__(self, parent, *args)
         self.listdata = datain
     def rowCount(self, parent=QtCore.QModelIndex()):
