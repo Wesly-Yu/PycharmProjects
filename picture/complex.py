@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-    string_list = ['open browser', 'click', 'input text', 'contain','log','clear',
+    keywords_list = ['open browser', 'click', 'input text', 'contain','log','clear',
                    'clearcookies','double click','scrol to view','should','reload',
                    'and','wait','children','right click','.rightclick()','read file'
                    ,'equal']
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     combo = ExtendedComboBox()
 
     # either fill the standard model of the combobox
-    combo.addItems(string_list)
+    combo.addItems(keywords_list)
 
     # or use another model
     #combo.setModel(QStringListModel(string_list))
