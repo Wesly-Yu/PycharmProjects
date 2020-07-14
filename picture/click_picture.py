@@ -42,13 +42,15 @@ class MyListView(QtWidgets.QListView):
 
         crntDir = "D:\\log"
         list_data = []
+        image_list = []
         philes = os.listdir(crntDir)
         for phile in philes:
             if phile.endswith(".png"):
                 list_data.append(os.path.join(crntDir, phile))
+                image_list.append(phile)
         self.List_data = list_data
-
         print(self.List_data)
+        print(image_list)
         lm = MyListModel(list_data)
         self.setModel(lm)
         self.show()
@@ -66,7 +68,7 @@ class MyListView(QtWidgets.QListView):
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = MyListView()
-    window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
+    # window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
     window.setWindowOpacity(0.9)
     window.show()
     window.raise_()
