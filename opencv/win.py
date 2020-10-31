@@ -437,7 +437,7 @@ if __name__ == "__main__":
     time.sleep(2)
     win = Windows()
     time.sleep(2)
-    position=win.loop_find(Template('1.png'),threshold=0.5)
+    position=win.loop_find(Template('3.png'),threshold=0.7)
     windows=Windows()
     windows.touch(position)
     time.sleep(10)

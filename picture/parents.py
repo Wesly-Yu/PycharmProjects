@@ -60,28 +60,30 @@ from PyQt5.QtWidgets import *
 #         image_selected_path = self.List_data[item.row()]
 #         print(image_selected_path)
 #         self.close()
+# class CompleterImage(QCompleter):
+#     insertText = QtCore.pyqtSignal(str)
+#     def __init__(self, parent=None):
+#         #image name in image_list
+#         crntDir = "D:\\log"
+#         image_list = []
+#         philes = os.listdir(crntDir)
+#         for phile in philes:
+#             if phile.endswith(".png"):
+#                 image_list.append(phile)
+#         # print(image_list)
+#         QCompleter.__init__(self,image_list, parent)
+#         self.setCompletionMode(QCompleter.PopupCompletion)
+#         self.highlighted.connect(self.setHighlighted)
+#     def setHighlighted(self, text):
+#         self.lastSelected = text
+#
+#     def getSelected(self):
+#         return self.lastSelected
 
 class CompleterWords(QCompleter):
     insertText = QtCore.pyqtSignal(str)
-
     def __init__(self, parent=None):
-        keywords_list = ['open browser', 'click', 'input text', 'contain', 'log', 'clear',
-                         'clearcookies', 'doubleclick', 'scrol to view', 'should', 'reload',
-                         'and', 'wait', 'children', 'right click', '.rightclick()', 'read file'
-            , 'equal']
-        #image name in image_list
-        QCompleter.__init__(self,keywords_list, parent)
-        self.setCompletionMode(QCompleter.PopupCompletion)
-        self.highlighted.connect(self.setHighlighted)
-    def setHighlighted(self, text):
-        self.lastSelected = text
-
-    def getSelected(self):
-        return self.lastSelected
-class CompleterImage(QCompleter):
-    insertText = QtCore.pyqtSignal(str)
-    def __init__(self, parent=None):
-        #image name in image_list
+        insertText = QtCore.pyqtSignal(str)
         crntDir = "D:\\log"
         image_list = []
         philes = os.listdir(crntDir)
@@ -89,6 +91,11 @@ class CompleterImage(QCompleter):
             if phile.endswith(".png"):
                 image_list.append(phile)
         print(image_list)
+        keywords_list = ['open browser', 'click', 'input text', 'contain', 'log', 'clear',
+                         'clearcookies', 'doubleclick', 'scrol to view', 'should', 'reload',
+                         'and', 'wait', 'children', 'right click', '.rightclick()', 'read file'
+            , 'equal']
+        #image name in image_list
         QCompleter.__init__(self,image_list, parent)
         self.setCompletionMode(QCompleter.PopupCompletion)
         self.highlighted.connect(self.setHighlighted)
@@ -97,3 +104,4 @@ class CompleterImage(QCompleter):
 
     def getSelected(self):
         return self.lastSelected
+

@@ -4,7 +4,7 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QCompleter
 from PyQt5 import QtCore
 import sys
-from picture.parents import CompleterWords,CompleterImage
+from picture.parents import CompleterWords
 
 
 
@@ -12,10 +12,10 @@ class AwesomeTextEdit(QPlainTextEdit):
     def __init__(self, parent=None):
         super(AwesomeTextEdit, self).__init__(parent)
 
-        self.completer2 = CompleterImage()
+        # self.completer2 = CompleterImage()
         self.completer = CompleterWords()
         self.completer.setWidget(self)
-        self.completer2.setWidget(self)
+        # self.completer2.setWidget(self)
         self.completer.insertText.connect(self.insertCompletion)
 
     def insertCompletion(self, completion):

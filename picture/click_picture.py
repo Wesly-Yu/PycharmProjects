@@ -1,12 +1,56 @@
 #coding='utf-8'
+import sys
 
+from PyQt5.QtCore import QPoint
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPlainTextEdit,QHBoxLayout,QWidget
 import sys
 import os
-import qdarkstyle
 from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QTextCursor,QTextLine
 
+
+#-----------主弹窗-----------------------#
+
+class MyMainWindow(QMainWindow):
+    switch_window = QtCore.pyqtSignal()
+    def __init__(self):
+        super(MyMainWindow, self).__init__()
+
+        layout = QHBoxLayout()
+        self.centralWidget = QWidget()
+        self.centralWidget.setLayout(layout)
+        self.setCentralWidget(self.centralWidget)
+        self.line = QTextLine()
+        self.textedit = QPlainTextEdit()
+        self.textedit.textChanged.connect(self.save_text)
+        layout.addWidget(self.textedit)
+
+
+    def save_text(self):
+        list = ["baidu","test","screenshotaaa","search"]
+        text = self.textedit.toPlainText()
+        lines_last_words = text.split("\n")[-1].split(" ")[-1]
+        self.picwindow = ImgListView(lines_last_words)
+        self.picwindow.resize(130,130)
+        self.picwindow.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
+        if lines_last_words in list:
+            self.picwindow.show()
+            popup_pos = self.textedit.cursorRect()
+            x = popup_pos.x()
+            y = popup_pos.height()
+            pos2 = self.mapToGlobal(QPoint(1.2*x,2*y))
+            self.picwindow.move(pos2)
+            self.picwindow.setStyleSheet("border :1px solid black;")
+            self.picwindow.raise_()
+
+        else:
+            self.picwindow.hide()
+        with open('mytextfile.txt', 'w') as f:
+            f.write(text)
+
+#----------小弹窗----------#
 
 class MyListModel(QtCore.QAbstractListModel):
     def __init__(self, datain, parent=None, *args):
@@ -18,7 +62,6 @@ class MyListModel(QtCore.QAbstractListModel):
         return len(self.listdata)
 
     def data(self, index, role):
-        s = QtCore.QSize(250, 200)
         if index.isValid() and role == QtCore.Qt.DecorationRole:
             return QtGui.QIcon(QtGui.QPixmap(self.listdata[index.row()]))
         if index.isValid() and role == QtCore.Qt.DisplayRole:
@@ -31,26 +74,22 @@ class MyListModel(QtCore.QAbstractListModel):
         if index > -1 and index < len(self.ListItemData):
             return self.ListItemData[index]
 
-class MyListView(QtWidgets.QListView):
+
+
+class ImgListView(QtWidgets.QListView):
     """docstring for MyListView"""
-    def __init__(self,parent=None):
-        super(MyListView, self).__init__(parent)
+    def __init__(self,imagename,parent=None):
+        super(ImgListView, self).__init__(parent)
         self.Listview = QListView()
         self.setViewMode(QtWidgets.QListView.IconMode)
-        self.setIconSize(QtCore.QSize(90, 90))
-        self.setGridSize(QtCore.QSize(110, 110))
+        self.setIconSize(QtCore.QSize(110, 110))
+        self.setGridSize(QtCore.QSize(120, 120))
 
-        crntDir = "D:\\log"
+        crntDir = "/Users/yupeng55/Documents/PycharmProjects/pyqt5/icon/"
         list_data = []
-        image_list = []
-        philes = os.listdir(crntDir)
-        for phile in philes:
-            if phile.endswith(".png"):
-                list_data.append(os.path.join(crntDir, phile))
-                image_list.append(phile)
+        target_file = crntDir+imagename+".jpg"
+        list_data.append(target_file)
         self.List_data = list_data
-        print(self.List_data)
-        print(image_list)
         lm = MyListModel(list_data)
         self.setModel(lm)
         self.show()
@@ -58,18 +97,19 @@ class MyListView(QtWidgets.QListView):
 
     def onclicked(self,item):
         image_selected_path = self.List_data[item.row()]
-        print(image_selected_path)
         self.close()
 
 
 
 
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyListView()
-    # window.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
-    window.setWindowOpacity(0.9)
-    window.show()
-    window.raise_()
+def main():
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+    app = QApplication(sys.argv)
+    form = MyMainWindow()
+    form.resize(800,800)
+    form.show()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()
+
