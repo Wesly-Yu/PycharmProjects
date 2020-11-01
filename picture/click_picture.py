@@ -8,8 +8,8 @@ import os
 from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QTextCursor,QTextLine
-
+from PyQt5.QtGui import QTextCursor,QTextLine,QFont
+from picture import syntax
 
 #-----------主弹窗-----------------------#
 
@@ -24,6 +24,8 @@ class MyMainWindow(QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.line = QTextLine()
         self.textedit = QPlainTextEdit()
+        self.highlight = syntax.PythonHighlighter(self.textedit.document())
+        self.textedit.setFont(QFont("Microsoft YaHei", 17))
         self.textedit.textChanged.connect(self.save_text)
         layout.addWidget(self.textedit)
 
