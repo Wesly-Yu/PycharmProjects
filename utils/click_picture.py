@@ -9,6 +9,8 @@ from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QTextCursor,QTextLine,QFont
+
+from qtUi.NewMainWindows import Ui_MainWindow
 from textEdit import syntax
 
 #-----------主弹窗-----------------------#
@@ -23,7 +25,6 @@ class MyMainWindow(QMainWindow):
         self.centralWidget.setLayout(layout)
         self.setCentralWidget(self.centralWidget)
         self.line = QTextLine()
-        self.textedit = QPlainTextEdit()
         self.highlight = syntax.PythonHighlighter(self.textedit.document())
         self.textedit.setFont(QFont("Microsoft YaHei", 17))
         self.textedit.textChanged.connect(self.save_text)
@@ -104,14 +105,4 @@ class ImgListView(QtWidgets.QListView):
 
 
 
-def main():
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
-    app = QApplication(sys.argv)
-    form = MyMainWindow()
-    form.resize(800,800)
-    form.show()
-    sys.exit(app.exec_())
-
-if __name__ == "__main__":
-    main()
 

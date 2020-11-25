@@ -1,12 +1,12 @@
-from pyqt5.NewMainWindows import Ui_MainWindow
-from PyQt5 import QtWidgets
+from qtUi.NewMainWindows import Ui_MainWindow
+from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from pyqt5.Methodfile import createNewFile
-import  xlwt
+from qtUi.Methodfile import createNewFile
 import os
-from pyqt5.Qtreeview import FileTreeSelectorModel,ProxyModel
-
+from qtUi.Qtreeview import FileTreeSelectorModel,ProxyModel
+from textEdit import syntax
+from PyQt5.QtGui import QTextCursor,QTextLine,QFont
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
@@ -31,6 +31,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.tree2.setContextMenuPolicy(Qt.CustomContextMenu)
         self.dialog = QtWidgets.QDialog()
         self.flo = QFormLayout()
+        self.highlight = syntax.PythonHighlighter(self.textedit.document())
+        self.textedit.setFont(QFont("Microsoft YaHei", 13))
 
 
 
@@ -38,7 +40,27 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def ExitTool(self):
         self.close()
 
+    def save_text(self):
+        list = ["baidu","test","screenshotaaa","search"]
+        text = self.textedit.toPlainText()
+        lines_last_words = text.split("\n")[-1].split(" ")[-1]
+        self.picwindow = ImgListView(lines_last_words)
+        self.picwindow.resize(130,130)
+        self.picwindow.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
+        if lines_last_words in list:
+            self.picwindow.show()
+            popup_pos = self.textedit.cursorRect()
+            x = popup_pos.x()
+            y = popup_pos.height()
+            pos2 = self.mapToGlobal(QPoint(1.2*x,2*y))
+            self.picwindow.move(pos2)
+            self.picwindow.setStyleSheet("border :1px solid black;")
+            self.picwindow.raise_()
 
+        else:
+            self.picwindow.hide()
+        with open('mytextfile.txt', 'w') as f:
+            f.write(text)
     def FileNew(self):
         global dialog
         global pNormalLineEdit
@@ -82,7 +104,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         Dirpath = QFileDialog.getExistingDirectory(self,'Open File','./home')
         print(Dirpath)
         self.root_path=Dirpath
-        filter = ['*.xls','*.xlsx']
+        filter = ['*.txt']
         # Model
         self.dirModel = FileTreeSelectorModel(rootpath=self.root_path)
         self.dirModel.setNameFilters(filter)
@@ -140,11 +162,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
                     self.tree.edit(item)
                 else:
                     fileNum = createNewFile(self.FilePath)
-                    newFileName = 'new'+str(fileNum)+'.xls'
+                    newFileName = 'new'+str(fileNum)+'.txt'
                     newFilepath=Filepath+'/'+newFileName
-                    workbook = xlwt.Workbook(encoding='utf-8')
-                    sheet1 = workbook.add_sheet('sheet1')
-                    workbook.save(newFilepath)
             else:
                 menu.addAction('重命名文件')
                 menu.addAction('删除文件')
@@ -198,7 +217,54 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
 
+#----------小弹窗----------#
 
+class MyListModel(QtCore.QAbstractListModel):
+    def __init__(self, datain, parent=None, *args):
+        """ datain: a list where each item is a row
+        """
+        QtCore.QAbstractListModel.__init__(self, parent, *args)
+        self.listdata = datain
+    def rowCount(self, parent=QtCore.QModelIndex()):
+        return len(self.listdata)
+
+    def data(self, index, role):
+        if index.isValid() and role == QtCore.Qt.DecorationRole:
+            return QtGui.QIcon(QtGui.QPixmap(self.listdata[index.row()]))
+        if index.isValid() and role == QtCore.Qt.DisplayRole:
+            # print(QtCore.QVariant(self.ListItemData[index.row()]['name']))
+            return QtCore.QVariant(os.path.splitext(os.path.split(self.listdata[index.row()])[-1])[0])
+        else:
+            return QtCore.QVariant()
+
+    def getItem(self, index):
+        if index > -1 and index < len(self.ListItemData):
+            return self.ListItemData[index]
+
+
+
+class ImgListView(QtWidgets.QListView):
+    """docstring for MyListView"""
+    def __init__(self,imagename,parent=None):
+        super(ImgListView, self).__init__(parent)
+        self.Listview = QListView()
+        self.setViewMode(QtWidgets.QListView.IconMode)
+        self.setIconSize(QtCore.QSize(110, 110))
+        self.setGridSize(QtCore.QSize(120, 120))
+
+        crntDir = "/Users/yupeng55/Documents/PycharmProjects/qtUi/icon/"
+        list_data = []
+        target_file = crntDir+imagename+".jpg"
+        list_data.append(target_file)
+        self.List_data = list_data
+        lm = MyListModel(list_data)
+        self.setModel(lm)
+        self.show()
+        self.clicked.connect(self.onclicked)
+
+    def onclicked(self,item):
+        image_selected_path = self.List_data[item.row()]
+        self.close()
 
 
 
