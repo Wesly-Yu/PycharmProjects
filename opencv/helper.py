@@ -102,7 +102,7 @@ class G(object):
         saveDC.DeleteDC()
         win32gui.ReleaseDC(hwnd, hwndDC)
         win32gui.DeleteObject(saveBitMap.GetHandle())
-        # cv2.imshow('image',cv2_image)
+        # cv2.imshow('toolIcon',cv2_image)
         # cv2.waitKey(0)
         return cv2_image
     @classmethod

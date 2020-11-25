@@ -47,20 +47,20 @@ MATCHING_METHODS = {
 @logwrap
 def loop_find(query, timeout=ST.FIND_TIMEOUT, threshold=None, interval=0.5, intervalfunc=None):
     """
-    Search for image template in the screen until timeout
+    Search for toolIcon template in the screen until timeout
 
     Args:
-        query: image template to be found in screenshot
-        timeout: time interval how long to look for the image template
+        query: toolIcon template to be found in screenshot
+        timeout: time interval how long to look for the toolIcon template
         threshold: default is None
-        interval: sleep interval before next attempt to find the image template
-        intervalfunc: function that is executed after unsuccessful attempt to find the image template
+        interval: sleep interval before next attempt to find the toolIcon template
+        intervalfunc: function that is executed after unsuccessful attempt to find the toolIcon template
 
     Raises:
-        TargetNotFoundError: when image template is not found in screenshot
+        TargetNotFoundError: when toolIcon template is not found in screenshot
 
     Returns:
-        TargetNotFoundError if image template not found, otherwise returns the position where the image template has
+        TargetNotFoundError if toolIcon template not found, otherwise returns the position where the toolIcon template has
         been found in screenshot
 
     """
@@ -112,7 +112,7 @@ def try_log_screen(screen=None):
     return {"screen": filename, "resolution": aircv.get_resolution(screen)}
 class Template(object):
     """
-    picture as touch/swipe/wait/exists target and extra info for cv match
+    textEdit as touch/swipe/wait/exists target and extra info for cv match
     filename: pic filename
     target_pos: ret which pos in the pic
     record_pos: pos in screen when recording
@@ -159,7 +159,7 @@ class Template(object):
 
     @logwrap
     def _cv_match(self, screen):
-        # in case image file not exist in current directory:
+        # in case toolIcon file not exist in current directory:
         image = self._imread()
         image = self._resize_image(image, screen, ST.RESIZE_METHOD)
         ret = None
@@ -200,7 +200,7 @@ class Template(object):
         # calc predict area in screen
         image_wh, screen_resolution = aircv.get_resolution(image), aircv.get_resolution(screen)
         xmin, ymin, xmax, ymax = Predictor.get_predict_area(self.record_pos, image_wh, self.resolution, screen_resolution)
-        # crop predict image from screen
+        # crop predict toolIcon from screen
         predict_area = aircv.crop_image(screen, (xmin, ymin, xmax, ymax))
         if not predict_area.any():
             return None
@@ -271,7 +271,7 @@ class Predictor(object):
     def get_predict_area(cls, record_pos, image_wh, image_resolution=(), screen_resolution=()):
         """Get predicted area in screen."""
         x, y = cls.get_predict_point(record_pos, screen_resolution)
-        # The prediction area should depend on the image size:
+        # The prediction area should depend on the toolIcon size:
         if image_resolution:
             predict_x_radius = int(image_wh[0] * screen_resolution[0] / (2 * image_resolution[0])) + cls.DEVIATION
             predict_y_radius = int(image_wh[1] * screen_resolution[1] / (2 * image_resolution[1])) + cls.DEVIATION

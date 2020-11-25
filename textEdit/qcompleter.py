@@ -4,7 +4,7 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QCompleter
 from PyQt5 import QtCore
 import sys
-from picture.parents import CompleterWords
+from textEdit.parents import CompleterWords
 
 
 

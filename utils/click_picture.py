@@ -9,7 +9,7 @@ from PyQt5 import QtGui, QtCore,QtWidgets
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QTextCursor,QTextLine,QFont
-from picture import syntax
+from textEdit import syntax
 
 #-----------主弹窗-----------------------#
 
@@ -87,7 +87,7 @@ class ImgListView(QtWidgets.QListView):
         self.setIconSize(QtCore.QSize(110, 110))
         self.setGridSize(QtCore.QSize(120, 120))
 
-        crntDir = "/Users/yupeng55/Documents/PycharmProjects/pyqt5/icon/"
+        crntDir = "/Users/yupeng55/Documents/PycharmProjects/qtUi/icon/"
         list_data = []
         target_file = crntDir+imagename+".jpg"
         list_data.append(target_file)

@@ -63,7 +63,7 @@ from PyQt5.QtWidgets import *
 # class CompleterImage(QCompleter):
 #     insertText = QtCore.pyqtSignal(str)
 #     def __init__(self, parent=None):
-#         #image name in image_list
+#         #toolIcon name in image_list
 #         crntDir = "D:\\log"
 #         image_list = []
 #         philes = os.listdir(crntDir)
@@ -95,7 +95,7 @@ class CompleterWords(QCompleter):
                          'clearcookies', 'doubleclick', 'scrol to view', 'should', 'reload',
                          'and', 'wait', 'children', 'right click', '.rightclick()', 'read file'
             , 'equal']
-        #image name in image_list
+        #toolIcon name in image_list
         QCompleter.__init__(self,image_list, parent)
         self.setCompletionMode(QCompleter.PopupCompletion)
         self.highlighted.connect(self.setHighlighted)

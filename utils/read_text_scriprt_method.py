@@ -1,8 +1,8 @@
 # def getQplainTextEdit(scriptfilename):
-from  picture.reflacct_keywords import execute_keyword
+from utils.reflacct_keywords import execute_keyword
 
 #path  Only for Mac  system#
-crntDir = "/Users/yupeng55/Documents/PycharmProjects/picture/read_txt/"
+crntDir = "/Users/yupeng55/Documents/PycharmProjects/textEdit/read_txt/"
 list_data = crntDir + "first_script"
 def  test_excution():
     with open("first_script",'r') as f:
