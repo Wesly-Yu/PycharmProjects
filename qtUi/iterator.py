@@ -1,15 +1,30 @@
-#coding='utf-8'
-from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import  QSortFilterProxyModel
-from PyQt5.QtWidgets import QFileSystemModel
+from PyQt5.Qt import *
+import sys
+from picture.read_txt import syntax
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("QPlainTextEdit的学习")
+        self.resize(500, 500)
+        self.set_ui()
+
+    def set_ui(self):
+        self.plainTextEdit = QPlainTextEdit(self)
+        self.highlight = syntax.PythonHighlighter(self.plainTextEdit.document())
+        self.plainTextEdit.setFont(QFont("Microsoft YaHei", 17))
+        self.plainTextEdit.resize(300, 300)
+        self.plainTextEdit.move(100, 100)
+        text = self.plainTextEdit.toPlainText()  # 原始的字符串
+        lines_last_words = text.split("\n")[-1].split(" ")[-1]
+        print(lines_last_words)
 
 
 
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
 
-class FileTreeSelectorModel(QtWidgets.QFileSystemModel):
-    def __init__(self, parent=None, rootpath='/'):
-        QtWidgets.QFileSystemModel.__init__(self, None)
-        # self.setFilter(QtCore.QDir.AllEntries | QtCore.QDir.Hidden | QtCore.QDir.NoDot)
+    window = Window()
+    window.show()
 
-    # def treeview(self):
-
+    sys.exit(app.exec_())

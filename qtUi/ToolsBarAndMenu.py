@@ -1,23 +1,22 @@
 from qtUi.NewMainWindows import Ui_MainWindow
-from PyQt5 import QtGui, QtCore,QtWidgets
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from qtUi.Methodfile import createNewFile
+from PyQt5.QtGui import QTextCursor,QFont
+from PyQt5 import QtGui, QtCore
 import os
 from qtUi.Qtreeview import FileTreeSelectorModel,ProxyModel
-from textEdit import syntax
-from PyQt5.QtGui import QTextCursor,QTextLine,QFont
+from qtUi import syntax
 
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
         super(ToolsBarAndMenu,self).__init__(parent)
         self.setupUi(self)
         self.iniUI()
-        self.initFixtureSourece()
         self.actionNewFile.triggered.connect(self.FileNew)
         self.actionOpen.triggered.connect(self.openFile)
         self.actionExite.triggered.connect(self.ExitTool)
-        self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
+        #self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
         self.tree.clicked.connect(self.tree_click)
         self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
         self.show()
@@ -26,13 +25,15 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def iniUI(self):
         self.tree = self.treeview1
         self.tree2 = self.treeview2
+        self.highlight = syntax.PythonHighlighter(self.tableView.document())
+        self.tableView.setFont(QFont("Microsoft YaHei", 17))
+        self.tableView.ensureCursorVisible()
+        self.tableView.textChanged.connect(self.save_text)
         self.tree.setEditTriggers(self.tree.NoEditTriggers)
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree2.setContextMenuPolicy(Qt.CustomContextMenu)
         self.dialog = QtWidgets.QDialog()
         self.flo = QFormLayout()
-        self.highlight = syntax.PythonHighlighter(self.textedit.document())
-        self.textedit.setFont(QFont("Microsoft YaHei", 13))
 
 
 
@@ -40,27 +41,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def ExitTool(self):
         self.close()
 
-    def save_text(self):
-        list = ["baidu","test","screenshotaaa","search"]
-        text = self.textedit.toPlainText()
-        lines_last_words = text.split("\n")[-1].split(" ")[-1]
-        self.picwindow = ImgListView(lines_last_words)
-        self.picwindow.resize(130,130)
-        self.picwindow.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
-        if lines_last_words in list:
-            self.picwindow.show()
-            popup_pos = self.textedit.cursorRect()
-            x = popup_pos.x()
-            y = popup_pos.height()
-            pos2 = self.mapToGlobal(QPoint(1.2*x,2*y))
-            self.picwindow.move(pos2)
-            self.picwindow.setStyleSheet("border :1px solid black;")
-            self.picwindow.raise_()
 
-        else:
-            self.picwindow.hide()
-        with open('mytextfile.txt', 'w') as f:
-            f.write(text)
     def FileNew(self):
         global dialog
         global pNormalLineEdit
@@ -122,61 +103,32 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.tree.setColumnHidden(2, True)
         self.tree.setColumnHidden(3, True)
         self.tree.setHeaderHidden(True)
-#-------------------------------------------初始化夹包显示-----------------------------------------------------------------------#
-    def initFixtureSourece(self):
-        username = os.environ['USERNAME']
-        sourcePath='C:/Users/'+username+'/cypress/fixtures'
-        self.source_path = sourcePath
-        self.dirModel2 = QFileSystemModel()
-        self.dirModel2.setRootPath(QDir.rootPath())
-        self.dirModel2.setReadOnly(False)
-        root_index = self.dirModel2.index(self.source_path).parent()
-        self.proxy2 = ProxyModel(self.dirModel2)
-        self.proxy2.setSourceModel(self.dirModel2)
-        self.proxy2.root_path = self.source_path
-        self.tree2.setModel(self.proxy2)
-        proxy_root_index = self.proxy2.mapFromSource(root_index)
-        self.tree2.setRootIndex(proxy_root_index)
-        self.tree2.setColumnHidden(1, True)
-        self.tree2.setColumnHidden(2, True)
-        self.tree2.setColumnHidden(3, True)
-        self.tree2.setHeaderHidden(True)
-        self.tree2.expandAll()
-        self.tree2.clicked.connect(self.tree_click2)
 
+    def save_text(self):
+        list = ["baidu", "test", "screenshotaaa", "search"]
+        text = self.tableView.toPlainText()
 
-#-------------------------------------------------------------------------------------------------------------------------------#
+        lines_last_words = text.split("\n")[-1].split(" ")[-1]
+        self.picwindow = ImgListView(lines_last_words)
+        self.picwindow.resize(130, 130)
+        self.picwindow.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Tool)
+        if lines_last_words in list:
+            self.picwindow.show()
+            popup_pos = self.tableView.cursorRect()
+            x = popup_pos.x()
+            y = popup_pos.height()
+            pos2 = self.mapToGlobal(QPoint(300+x,20+2.5*y))
+            self.picwindow.move(pos2)
+            self.picwindow.setStyleSheet("border :1px solid black;")
+            self.picwindow.raise_()
 
+        else:
+            self.picwindow.hide()
 
-    # #编辑用例 树框中的数据
-    def rightClickMenu1(self,position1):
-        try:
-            self.FilePath = Filepath
-            menu = QMenu(self.tree)
-            item = self.tree.indexAt(position1)
-            if os.path.isdir(Filepath):
-                menu.addAction('重命名文件夹')
-                menu.addAction('新增文件')
-                action = menu.exec_(self.tree.mapToGlobal(position1))
-                if action.text() == '重命名文件夹':
-                    self.tree.edit(item)
-                else:
-                    fileNum = createNewFile(self.FilePath)
-                    newFileName = 'new'+str(fileNum)+'.txt'
-                    newFilepath=Filepath+'/'+newFileName
-            else:
-                menu.addAction('重命名文件')
-                menu.addAction('删除文件')
-                action = menu.exec_(self.tree.mapToGlobal(position1))
-                if action.text() == '重命名文件':
-                    self.tree.edit(item)
-                else:
-                    os.remove(self.FilePath)
+        with open('mytextfile.txt', 'w') as f:
+            f.write(text)
 
-        except Exception as e:
-            print(e)
-    # # 编辑po公共参数 树框中的数据
-    def rightClickMenu2(self,position2):
+    def rightClickMenu2(self, position2):
         try:
             self.FilePathFixture = FilePathFixture
             menu = QMenu(self.tree2)
@@ -185,7 +137,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
                 menu.addAction('新增文件')
                 action = menu.exec_(self.tree2.mapToGlobal(position2))
                 if action.text() == '新增文件':
-                    text,ok =QInputDialog.getText(self,'文件名')
+                    text, ok = QInputDialog.getText(self, '文件名')
             else:
                 menu.addAction('重命名文件')
                 menu.addAction('删除文件')
@@ -197,27 +149,23 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         except Exception as e:
             print(e)
 
-
-#----------------------------------槽函数--------------------------------------------------#
+    # ----------------------------------槽函数--------------------------------------------------#
     @pyqtSlot(QModelIndex)
     def tree_click(self, index):
-        global Filepath,Filename
+        global Filepath, Filename
         ix = self.proxy.mapToSource(index)
         Filepath = ix.data(QFileSystemModel.FilePathRole)
         Filename = ix.data(QFileSystemModel.FileNameRole)
 
     @pyqtSlot(QModelIndex)
     def tree_click2(self, index2):
-        global FilePathFixture,FileNameFixture
+        global FilePathFixture, FileNameFixture
         ix2 = self.proxy2.mapToSource(index2)
         FilePathFixture = ix2.data(QFileSystemModel.FilePathRole)
         FileNameFixture = ix2.data(QFileSystemModel.FileNameRole)
         print(FilePathFixture)
         print(FileNameFixture)
-
-
-
-#----------小弹窗----------#
+    # ----------小弹窗----------#
 
 class MyListModel(QtCore.QAbstractListModel):
     def __init__(self, datain, parent=None, *args):
@@ -225,6 +173,7 @@ class MyListModel(QtCore.QAbstractListModel):
         """
         QtCore.QAbstractListModel.__init__(self, parent, *args)
         self.listdata = datain
+
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.listdata)
 
@@ -241,20 +190,18 @@ class MyListModel(QtCore.QAbstractListModel):
         if index > -1 and index < len(self.ListItemData):
             return self.ListItemData[index]
 
-
-
 class ImgListView(QtWidgets.QListView):
-    """docstring for MyListView"""
-    def __init__(self,imagename,parent=None):
+
+    def __init__(self, imagename, parent=None):
         super(ImgListView, self).__init__(parent)
         self.Listview = QListView()
         self.setViewMode(QtWidgets.QListView.IconMode)
         self.setIconSize(QtCore.QSize(110, 110))
         self.setGridSize(QtCore.QSize(120, 120))
 
-        crntDir = "/Users/yupeng55/Documents/PycharmProjects/qtUi/icon/"
+        crntDir = "/Users/yupeng55/Documents/project/PycharmProjects/opencv/"
         list_data = []
-        target_file = crntDir+imagename+".jpg"
+        target_file = crntDir + imagename + ".jpg"
         list_data.append(target_file)
         self.List_data = list_data
         lm = MyListModel(list_data)
@@ -262,9 +209,71 @@ class ImgListView(QtWidgets.QListView):
         self.show()
         self.clicked.connect(self.onclicked)
 
-    def onclicked(self,item):
+    def onclicked(self, item):
         image_selected_path = self.List_data[item.row()]
         self.close()
+#-------------------------------------------初始化夹包显示-----------------------------------------------------------------------#
+    # def initFixtureSourece(self):
+    #     # username = os.environ['USERNAME']
+    #     # sourcePath='C:/Users/'+username+'/cypress/fixtures'
+    #     self.source_path = sourcePath
+    #     self.dirModel2 = QFileSystemModel()
+    #     self.dirModel2.setRootPath(QDir.rootPath())
+    #     self.dirModel2.setReadOnly(False)
+    #     root_index = self.dirModel2.index(self.source_path).parent()
+    #     self.proxy2 = ProxyModel(self.dirModel2)
+    #     self.proxy2.setSourceModel(self.dirModel2)
+    #     self.proxy2.root_path = self.source_path
+    #     self.tree2.setModel(self.proxy2)
+    #     proxy_root_index = self.proxy2.mapFromSource(root_index)
+    #     self.tree2.setRootIndex(proxy_root_index)
+    #     self.tree2.setColumnHidden(1, True)
+    #     self.tree2.setColumnHidden(2, True)
+    #     self.tree2.setColumnHidden(3, True)
+    #     self.tree2.setHeaderHidden(True)
+    #     self.tree2.expandAll()
+    #     self.tree2.clicked.connect(self.tree_click2)
+
+
+#-------------------------------------------------------------------------------------------------------------------------------#
+
+
+    # # #编辑用例 树框中的数据
+    # def rightClickMenu1(self,position1):
+    #     try:
+    #         self.FilePath = Filepath
+    #         menu = QMenu(self.tree)
+    #         item = self.tree.indexAt(position1)
+    #         if os.path.isdir(Filepath):
+    #             menu.addAction('重命名文件夹')
+    #             menu.addAction('新增文件')
+    #             action = menu.exec_(self.tree.mapToGlobal(position1))
+    #             if action.text() == '重命名文件夹':
+    #                 self.tree.edit(item)
+    #             else:
+    #                 fileNum = createNewFile(self.FilePath)
+    #                 newFileName = 'new'+str(fileNum)+'.xls'
+    #                 newFilepath=Filepath+'/'+newFileName
+    #                 workbook = xlwt.Workbook(encoding='utf-8')
+    #                 sheet1 = workbook.add_sheet('sheet1')
+    #                 workbook.save(newFilepath)
+    #         else:
+    #             menu.addAction('重命名文件')
+    #             menu.addAction('删除文件')
+    #             action = menu.exec_(self.tree.mapToGlobal(position1))
+    #             if action.text() == '重命名文件':
+    #                 self.tree.edit(item)
+    #             else:
+    #                 os.remove(self.FilePath)
+    #
+    #     except Exception as e:
+    #         print(e)
+    # # 编辑po公共参数 树框中的数据
+
+
+
+
+
 
 
 
