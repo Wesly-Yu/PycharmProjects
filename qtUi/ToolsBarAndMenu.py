@@ -206,7 +206,6 @@ class ImgListView(QtWidgets.QListView):
         self.List_data = list_data
         lm = MyListModel(list_data)
         self.setModel(lm)
-        self.show()
         self.clicked.connect(self.onclicked)
 
     def onclicked(self, item):
