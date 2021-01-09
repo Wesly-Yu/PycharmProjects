@@ -160,14 +160,8 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionRecord)
         self.toolBar.addAction(self.actionTestReport)
         self.toolBar.addWidget(self.comBox)
-        self.toolBar.setStyleSheet('''
-        toolBar{
-        background:#00B2EE;
-        border-top:1px solid darkGray;
-        border-bottom:1px solid darkGray;
-        border-right:1px solid darkGray;
-        border-top-right-radius:10px;
-        border-bottom-right-radius:10px;}''')
+        self.centralwidget.setStyleSheet('''QtWidgets#QMenuBar{background-color:rgb(0,191,255)}''')
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -211,3 +205,4 @@ if __name__ == '__main__':
     ui.setupUi(widget)
     widget.show()
     sys.exit(app.exec_())
+
