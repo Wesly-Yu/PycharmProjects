@@ -1,2 +1,2 @@
 # PycharmProjects
-Qt tools for cypress automation test,use keyword driver  like robotframework
+Qt tools for  automation test,use keyword driver  like robotframework
