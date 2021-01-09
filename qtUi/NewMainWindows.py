@@ -124,10 +124,17 @@ class Ui_MainWindow(object):
         self.actionRecord = QtWidgets.QAction(MainWindow)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap("../toolIcon/device-camera-video.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionScreenShot.setIcon(icon5)
+        self.actionScreenShot.setIcon(icon6)
         self.actionScreenShot.setObjectName("actionScreenShot")
         self.actionRecord.setIcon(icon6)
         self.actionRecord.setObjectName("actionRecord")
+        self.actionTestReport = QtWidgets.QAction(MainWindow)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("../toolIcon/AreaChart.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionTestReport.setIcon(icon7)
+        self.actionTestReport.setObjectName("actionTestReport")
+        self.actionTestReport.setIcon(icon7)
+        self.actionTestReport.setObjectName("actionTestReport")
         self.menu.addAction(self.actionNewFile)
         self.menu.addAction(self.actionOpen)
         self.menu.addAction(self.actionSave)
@@ -151,6 +158,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionReRun)
         self.toolBar.addAction(self.actionScreenShot)
         self.toolBar.addAction(self.actionRecord)
+        self.toolBar.addAction(self.actionTestReport)
         self.toolBar.addWidget(self.comBox)
         self.toolBar.setStyleSheet('''
         toolBar{
@@ -193,6 +201,7 @@ class Ui_MainWindow(object):
         self.actionReRun.setText(_translate("MainWindow", "重新执行"))
         self.actionScreenShot.setText(_translate("MainWindow", "截屏"))
         self.actionRecord.setText(_translate("MainWindow", "录制脚本"))
+        self.actionTestReport.setText(_translate("MainWindow", "查看测试报告"))
 
 
 if __name__ == '__main__':
