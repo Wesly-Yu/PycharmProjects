@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
         self.actionRecord = QtWidgets.QAction(MainWindow)
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap("../toolIcon/device-camera-video.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionScreenShot.setIcon(icon6)
+        self.actionScreenShot.setIcon(icon5)
         self.actionScreenShot.setObjectName("actionScreenShot")
         self.actionRecord.setIcon(icon6)
         self.actionRecord.setObjectName("actionRecord")
