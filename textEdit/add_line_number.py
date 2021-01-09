@@ -1,3 +1,4 @@
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QRect, QSize
 from PyQt5.QtWidgets import QWidget, QPlainTextEdit, QTextEdit
 from PyQt5.QtGui import QColor, QPainter, QTextFormat
@@ -7,6 +8,7 @@ class QLineNumberArea(QWidget):
     def __init__(self, editor):
         super().__init__(editor)
         self.codeEditor = editor
+
 
     def sizeHint(self):
         return QSize(self.editor.lineNumberAreaWidth(), 0)
@@ -21,11 +23,11 @@ class QCodeEditor(QPlainTextEdit):
         self.lineNumberArea = QLineNumberArea(self)
         self.blockCountChanged.connect(self.updateLineNumberAreaWidth)
         self.updateRequest.connect(self.updateLineNumberArea)
-        self.cursorPositionChanged.connect(self.highlightCurrentLine)
+        #self.cursorPositionChanged.connect(self.highlightCurrentLine)
         self.updateLineNumberAreaWidth(0)
 
     def lineNumberAreaWidth(self):
-        digits = 1
+        digits = 3
         max_value = max(1, self.blockCount())
         while max_value >= 10:
             max_value /= 10
@@ -49,22 +51,23 @@ class QCodeEditor(QPlainTextEdit):
         cr = self.contentsRect()
         self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(), self.lineNumberAreaWidth(), cr.height()))
 
-    def highlightCurrentLine(self):
-        extraSelections = []
-        if not self.isReadOnly():
-            selection = QTextEdit.ExtraSelection()
-            lineColor = QColor(Qt.yellow).lighter(160)
-            selection.format.setBackground(lineColor)
-            selection.format.setProperty(QTextFormat.FullWidthSelection, True)
-            selection.cursor = self.textCursor()
-            selection.cursor.clearSelection()
-            extraSelections.append(selection)
-        self.setExtraSelections(extraSelections)
+
+    # def highlightCurrentLine(self):
+    #     extraSelections = []
+    #     if not self.isReadOnly():
+    #         selection = QTextEdit.ExtraSelection()
+    #         lineColor = QColor(Qt.gray).lighter(160)
+    #         selection.format.setBackground(lineColor)
+    #         selection.format.setProperty(QTextFormat.FullWidthSelection, True)
+    #         selection.cursor = self.textCursor()
+    #         selection.cursor.clearSelection()
+    #         extraSelections.append(selection)
+    #     self.setExtraSelections(extraSelections)
 
     def lineNumberAreaPaintEvent(self, event):
         painter = QPainter(self.lineNumberArea)
-
-        painter.fillRect(event.rect(), Qt.lightGray)
+        #painter.fillRect(event.rect(), Qt.lightGray)
+        painter.fillRect(event.rect(), QColor("#E8E8E8"))
 
         block = self.firstVisibleBlock()
         blockNumber = block.blockNumber()
@@ -91,6 +94,6 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     codeEditor = QCodeEditor()
+    codeEditor.setMinimumSize(QtCore.QSize(600, 300))
     codeEditor.show()
-
     sys.exit(app.exec_())

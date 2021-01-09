@@ -8,6 +8,9 @@ import os
 from qtUi.Qtreeview import FileTreeSelectorModel,ProxyModel
 from qtUi import syntax
 
+
+
+
 class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self,parent=None):
         super(ToolsBarAndMenu,self).__init__(parent)

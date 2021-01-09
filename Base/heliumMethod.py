@@ -1,7 +1,7 @@
 from helium import *
 from selenium import *
 import time
-
+from playwright import sync_playwright
 
 #打开页面
 def  visit(url):

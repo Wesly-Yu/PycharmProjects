@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from  textEdit.add_line_number import QCodeEditor
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -36,7 +36,8 @@ class Ui_MainWindow(object):
         self.treeview2.setObjectName("treeView2")
         # self.treeview2.header().setDefaultSectionSize(124)
         self.gridLayout.addWidget(self.splitter, 0, 0, 1, 1)
-        self.tableView = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.tableView=QCodeEditor()
+        # self.tableView = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.tableView.setMinimumSize(QtCore.QSize(600, 300))
         self.tabelmodel = QStandardItemModel(12,9)
         # self.tableView.horizontalHeader().setVisible(False)
@@ -92,34 +93,41 @@ class Ui_MainWindow(object):
         self.actionDisplayReport.setObjectName("actionDisplayReport")
         self.actionQuickSave = QtWidgets.QAction(MainWindow)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("image/Save.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap("../toolIcon/save01.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionQuickSave.setIcon(icon)
         self.actionQuickSave.setObjectName("actionQuickSave")
         self.actionLastStep = QtWidgets.QAction(MainWindow)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("image/Knob Left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("../toolIcon/upstep01.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionLastStep.setIcon(icon1)
         self.actionLastStep.setObjectName("actionLastStep")
         self.actionNextStep = QtWidgets.QAction(MainWindow)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("image/Knob Forward.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("../toolIcon/next01.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionNextStep.setIcon(icon2)
         self.actionNextStep.setObjectName("actionNextStep")
         self.actionRunCase = QtWidgets.QAction(MainWindow)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("image/Knob Play Green.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("../toolIcon/play01.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionRunCase.setIcon(icon3)
         self.actionRunCase.setObjectName("actionRunCase")
         self.actionReRun = QtWidgets.QAction(MainWindow)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("image/Knob Refresh.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("../toolIcon/sync.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionReRun.setIcon(icon4)
         self.actionReRun.setObjectName("actionReRun")
         self.actionScreenShot = QtWidgets.QAction(MainWindow)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("image/2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap("../toolIcon/device-camera.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.comBox = QComboBox()
+        self.comBox.addItems(['无头模式','有头模式'])
+        self.actionRecord = QtWidgets.QAction(MainWindow)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("../toolIcon/device-camera-video.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionScreenShot.setIcon(icon5)
         self.actionScreenShot.setObjectName("actionScreenShot")
+        self.actionRecord.setIcon(icon6)
+        self.actionRecord.setObjectName("actionRecord")
         self.menu.addAction(self.actionNewFile)
         self.menu.addAction(self.actionOpen)
         self.menu.addAction(self.actionSave)
@@ -142,19 +150,29 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionRunCase)
         self.toolBar.addAction(self.actionReRun)
         self.toolBar.addAction(self.actionScreenShot)
+        self.toolBar.addAction(self.actionRecord)
+        self.toolBar.addWidget(self.comBox)
+        self.toolBar.setStyleSheet('''
+        toolBar{
+        background:#00B2EE;
+        border-top:1px solid darkGray;
+        border-bottom:1px solid darkGray;
+        border-right:1px solid darkGray;
+        border-top-right-radius:10px;
+        border-bottom-right-radius:10px;}''')
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Funny"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "AutoZone"))
         self.menu.setTitle(_translate("MainWindow", "文件"))
         self.menu_2.setTitle(_translate("MainWindow", "编辑"))
         self.menu_3.setTitle(_translate("MainWindow", "工具"))
         self.menu_4.setTitle(_translate("MainWindow", "帮助"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
-        self.actionNewFile.setText(_translate("MainWindow", "新建文件夹"))
+        self.actionNewFile.setText(_translate("MainWindow", "新建项目"))
         self.actionBackToLastStep.setText(_translate("MainWindow", "返回上一步"))
         self.actionNextStep.setText(_translate("MainWindow", "撤销"))
         self.actionOpen.setText(_translate("MainWindow", "打开文件夹"))
@@ -174,6 +192,8 @@ class Ui_MainWindow(object):
         self.actionRunCase.setText(_translate("MainWindow", "运行"))
         self.actionReRun.setText(_translate("MainWindow", "重新执行"))
         self.actionScreenShot.setText(_translate("MainWindow", "截屏"))
+        self.actionRecord.setText(_translate("MainWindow", "录制脚本"))
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

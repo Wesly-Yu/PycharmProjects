@@ -2,8 +2,8 @@
 import os
 from mss import mss
 from functools import wraps
-import pywintypes  # noqa
-import win32api
+import pywintypes
+#import win32api
 import time
 from pykeyboard import PyKeyboard
 from opencv.exceptions import IsNotTemplateError

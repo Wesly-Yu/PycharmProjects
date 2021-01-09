@@ -131,7 +131,7 @@
      <x>0</x>
      <y>0</y>
      <width>946</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -177,6 +177,13 @@
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
+   <property name="toolcolor" stdset="0">
+    <color>
+     <red>18</red>
+     <green>128</green>
+     <blue>241</blue>
+    </color>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -190,12 +197,13 @@
    <addaction name="action_4"/>
    <addaction name="action_5"/>
    <addaction name="action_6"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionNew_Files_2">
    <property name="text">
     <string>新建文件夹</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
+   <property name="shortcutVisibleInContextMenu" stdset="0">
     <bool>false</bool>
    </property>
   </action>
@@ -258,6 +266,14 @@
    <property name="text">
     <string>快速保存</string>
    </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
@@ -269,6 +285,12 @@
    </property>
    <property name="text">
     <string>上一步</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
@@ -282,6 +304,12 @@
    <property name="text">
     <string>下一步</string>
    </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+Z</string>
    </property>
@@ -294,6 +322,12 @@
    <property name="text">
     <string>运行</string>
    </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="action_5">
    <property name="icon">
@@ -303,6 +337,12 @@
    <property name="text">
     <string>重新执行</string>
    </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </action>
   <action name="action_6">
    <property name="icon">
@@ -311,6 +351,12 @@
    </property>
    <property name="text">
     <string>截屏</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>STSong</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
  </widget>
