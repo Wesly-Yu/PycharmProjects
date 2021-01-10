@@ -183,7 +183,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionEmail)
         self.toolBar.addWidget(self.comBoxTwo)
         self.toolBar.addWidget(self.comBoxOne)
-        self.centralwidget.setStyleSheet('''QtWidgets#QMenuBar{background-color:rgb(0,191,255)}''')
+        #self.centralwidget.setStyleSheet('''QtWidgets#QMenuBar{background-color:rgb(0,191,255)}''')
 
 
         self.retranslateUi(MainWindow)
