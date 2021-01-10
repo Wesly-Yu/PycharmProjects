@@ -54,14 +54,14 @@ class G(object):
     @classmethod
     def screenshot(filename, hwnd=None):
         """
-        Take the screenshot of Windows app
+        Take the pyqt_screenshot of Windows app
 
         Args:
-            filename: file name where to store the screenshot
+            filename: file name where to store the pyqt_screenshot
             hwnd:
 
         Returns:
-            bitmap screenshot file
+            bitmap pyqt_screenshot file
 
         """
         # import ctypes

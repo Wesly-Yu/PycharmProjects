@@ -93,10 +93,10 @@ class Windows(Device):
     @logwrap
     def try_log_screen(self,screen=None):
         """
-        Save screenshot to file
+        Save pyqt_screenshot to file
 
         Args:
-            screen: screenshot to be saved
+            screen: pyqt_screenshot to be saved
 
         Returns:
             None
@@ -114,14 +114,14 @@ class Windows(Device):
 
     def snapshot(self, filename=None, quality=10):
         """
-        Take a screenshot and save it in ST.LOG_DIR folder
+        Take a pyqt_screenshot and save it in ST.LOG_DIR folder
 
         Args:
-            filename: name of the file to give to the screenshot, {time}.jpg by default
+            filename: name of the file to give to the pyqt_screenshot, {time}.jpg by default
             quality: The toolIcon quality, integer in range [1, 99]
 
         Returns:
-            display the screenshot
+            display the pyqt_screenshot
 
         """
         if self.handle:

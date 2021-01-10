@@ -1,0 +1,1 @@
+from pyqt_screenshot.screenshot import Screenshot, constant

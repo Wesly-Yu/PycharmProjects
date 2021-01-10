@@ -50,18 +50,18 @@ def loop_find(query, timeout=ST.FIND_TIMEOUT, threshold=None, interval=0.5, inte
     Search for toolIcon template in the screen until timeout
 
     Args:
-        query: toolIcon template to be found in screenshot
+        query: toolIcon template to be found in pyqt_screenshot
         timeout: time interval how long to look for the toolIcon template
         threshold: default is None
         interval: sleep interval before next attempt to find the toolIcon template
         intervalfunc: function that is executed after unsuccessful attempt to find the toolIcon template
 
     Raises:
-        TargetNotFoundError: when toolIcon template is not found in screenshot
+        TargetNotFoundError: when toolIcon template is not found in pyqt_screenshot
 
     Returns:
         TargetNotFoundError if toolIcon template not found, otherwise returns the position where the toolIcon template has
-        been found in screenshot
+        been found in pyqt_screenshot
 
     """
     G.LOGGING.info("Try finding:\n%s", query)
@@ -93,10 +93,10 @@ def loop_find(query, timeout=ST.FIND_TIMEOUT, threshold=None, interval=0.5, inte
 @logwrap
 def try_log_screen(screen=None):
     """
-    Save screenshot to file
+    Save pyqt_screenshot to file
 
     Args:
-        screen: screenshot to be saved
+        screen: pyqt_screenshot to be saved
 
     Returns:
         None
