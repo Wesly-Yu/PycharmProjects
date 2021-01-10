@@ -7,7 +7,7 @@ from PyQt5 import QtGui, QtCore
 import os
 from qtUi.Qtreeview import FileTreeSelectorModel,ProxyModel
 from qtUi import syntax
-
+from pyqt_screenshot.screenshot import Screenshot, constant
 
 
 
@@ -19,6 +19,7 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.actionNewFile.triggered.connect(self.FileNew)
         self.actionOpen.triggered.connect(self.openFile)
         self.actionExite.triggered.connect(self.ExitTool)
+        self.actionScreenShot.triggered.connect(self.TakeScreenShot)
         #self.tree.customContextMenuRequested.connect(self.rightClickMenu1)
         self.tree.clicked.connect(self.tree_click)
         self.tree2.customContextMenuRequested.connect(self.rightClickMenu2)
@@ -39,7 +40,10 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
         self.flo = QFormLayout()
 
 
-
+    def TakeScreenShot(self):
+        self.showMinimized()
+        img = Screenshot.take_screenshot(constant.SAVE_TO_FILE)
+        img.show()
 
     def ExitTool(self):
         self.close()
