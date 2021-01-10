@@ -146,6 +146,12 @@ class Ui_MainWindow(object):
         self.actionAlarm.setIcon(icon9)
         self.actionAlarm.setObjectName("actionAlarm")
         self.actionAlarm.setIcon(icon9)
+        self.actionEmail = QtWidgets.QAction(MainWindow)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("../toolIcon/Mail.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionEmail.setIcon(icon10)
+        self.actionEmail.setObjectName("actionEmail")
+        self.actionEmail.setIcon(icon10)
         self.menu.addAction(self.actionNewFile)
         self.menu.addAction(self.actionOpen)
         self.menu.addAction(self.actionSave)
@@ -172,6 +178,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionTestReport)
         self.toolBar.addAction(self.actionHistory)
         self.toolBar.addAction(self.actionAlarm)
+        self.toolBar.addAction(self.actionEmail)
         self.toolBar.addWidget(self.comBox)
         self.centralwidget.setStyleSheet('''QtWidgets#QMenuBar{background-color:rgb(0,191,255)}''')
 
@@ -211,6 +218,7 @@ class Ui_MainWindow(object):
         self.actionTestReport.setText(_translate("MainWindow", "查看测试报告"))
         self.actionHistory.setText(_translate("MainWindow", "历史记录"))
         self.actionAlarm.setText(_translate("MainWindow", "定时"))
+        self.actionEmail.setText(_translate("MainWindow", "邮件"))
 
 
 if __name__ == '__main__':
