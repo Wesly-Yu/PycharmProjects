@@ -134,7 +134,18 @@ class Ui_MainWindow(object):
         self.actionTestReport.setIcon(icon7)
         self.actionTestReport.setObjectName("actionTestReport")
         self.actionTestReport.setIcon(icon7)
-        self.actionTestReport.setObjectName("actionTestReport")
+        self.actionHistory = QtWidgets.QAction(MainWindow)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("../toolIcon/历史.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionHistory.setIcon(icon8)
+        self.actionHistory.setObjectName("actionHistory")
+        self.actionHistory.setIcon(icon8)
+        self.actionAlarm = QtWidgets.QAction(MainWindow)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("../toolIcon/alarm-clock.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionAlarm.setIcon(icon9)
+        self.actionAlarm.setObjectName("actionAlarm")
+        self.actionAlarm.setIcon(icon9)
         self.menu.addAction(self.actionNewFile)
         self.menu.addAction(self.actionOpen)
         self.menu.addAction(self.actionSave)
@@ -159,6 +170,8 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionScreenShot)
         self.toolBar.addAction(self.actionRecord)
         self.toolBar.addAction(self.actionTestReport)
+        self.toolBar.addAction(self.actionHistory)
+        self.toolBar.addAction(self.actionAlarm)
         self.toolBar.addWidget(self.comBox)
         self.centralwidget.setStyleSheet('''QtWidgets#QMenuBar{background-color:rgb(0,191,255)}''')
 
@@ -196,6 +209,8 @@ class Ui_MainWindow(object):
         self.actionScreenShot.setText(_translate("MainWindow", "截屏"))
         self.actionRecord.setText(_translate("MainWindow", "录制脚本"))
         self.actionTestReport.setText(_translate("MainWindow", "查看测试报告"))
+        self.actionHistory.setText(_translate("MainWindow", "历史记录"))
+        self.actionAlarm.setText(_translate("MainWindow", "定时"))
 
 
 if __name__ == '__main__':
