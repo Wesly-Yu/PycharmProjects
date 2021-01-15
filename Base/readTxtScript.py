@@ -1,9 +1,9 @@
 # def getQplainTextEdit(scriptfilename):
 from Base.keyWordRecognize import execute_keyword
-
 #path  Only for Mac  system#
 #crntDir = "/Users/yupeng55/Documents/pythonProject1/UiTest/"
 #list_data = crntDir + "first_script"
+
 
 def  test_excution():
     with open("first_script",'r') as f:

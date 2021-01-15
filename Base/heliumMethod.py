@@ -1,11 +1,9 @@
 from helium import *
-from selenium import *
 import time
-from playwright import sync_playwright
 
 #打开页面
 def  visit(url):
-    driver = start_firefox(url)
+    driver = start_chrome(url)
 
 def wait(time):
     time.sleep(time)
