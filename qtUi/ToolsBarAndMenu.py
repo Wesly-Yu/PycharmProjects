@@ -42,8 +42,8 @@ class ToolsBarAndMenu(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def TakeScreenShot(self):
         self.showMinimized()
-        img = Screenshot.take_screenshot(constant.SAVE_TO_FILE)
-        img.show()
+        Screenshot.take_screenshot(constant.SAVE_TO_FILE)
+        self.showNormal()
 
     def ExitTool(self):
         self.close()
