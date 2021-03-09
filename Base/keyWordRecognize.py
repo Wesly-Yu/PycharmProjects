@@ -51,9 +51,9 @@ class ActionMethod():
             writeKeyWord ="print("+element+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword) == '切换':
-
+            element = args[0]
         elif str(keyword) == '点击截图':
-
+            element = args[0]
         elif str(keyword) == '上一步':
             writeKeyWord = "self.page.goBack()"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
