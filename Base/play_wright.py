@@ -50,6 +50,7 @@ class play_wright(unittest.TestCase):
         # self.page.waitForTimeout(2000)
         self.page.querySelector("//a[contains(text(),'下一页 >')]").scrollIntoViewIfNeeded()
         self.page.waitForTimeout(3000)
+        self.page.context.on()
         # if self.page.waitForSelector('a[name="tj_login"]', 5000,'visible'):
         #     self.page.click('a[name="tj_login"]')
         #     self.page.waitForTimeout(3000)
