@@ -20,6 +20,11 @@ class play_wright(unittest.TestCase):
         doubleclick(Image("Directories"))
         scroll_up(num_pixels=100)
         scroll_down(num_pixels=100)
+        rightclick("Something")
+        select("Language", "English")
+        attach_file("c:/test.txt", to="Please select a file:")
+        refresh()
+        wait_until(Text("Finished!").exists)
 
     def 测试2(self):
         options = ChromeOptions()
