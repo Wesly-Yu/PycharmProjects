@@ -4,15 +4,23 @@ import sys
 class bulidPythonScript():
     def initClassMethod(self,projectPath,packageName,browserType,execType):
         Dirpath = projectPath+"/"+packageName+".py"
+        importPackageOne="import unittest"
+        importPackageTwo = "from time import sleep"
+        importPackageThree = "from helium import *"
+        importPackageFour = "from selenium.webdriver import ChromeOptions,FirefoxOptions"
         classHeader = "class" + " " + packageName + "(unittest.TestCase):"
-        classInit="playwright = sync_playwright().start()"
-        classBrowser="browser = playwright."+browserType+".launch("+execType+"=False)"
-        classPage="page = browser.newPage()"
+        classInitChromeBrowser="ChromeOptions = ChromeOptions()"
+        classInitFireFoxBrowser = "FireFoxOptions = FirefoxOptions()"
+        classInitMaxPage="options.add_argument('--start-maximized')"
         with open(Dirpath, 'a+', encoding="utf-8") as f:
+            f.write('\t' + importPackageOne + "\n")
+            f.write('\t' + importPackageTwo + "\n")
+            f.write('\t' + importPackageThree + "\n")
+            f.write('\t' + importPackageFour + "\n")
             f.write(classHeader+'\n')
-            f.write('\t'+classInit+"\n")
-            f.write('\t'+classBrowser+"\n")
-            f.write('\t'+classPage+"\n")
+            f.write('\t'+classInitChromeBrowser+"\n")
+            f.write('\t'+classInitFireFoxBrowser+"\n")
+            f.write('\t' + classInitMaxPage + "\n")
     def addTailMethod(self,projectPath,packageName,caseList):
         Dirpath = projectPath + "/" + packageName + ".py"
         classMain = "if __name__ == '__main__':"
@@ -31,7 +39,6 @@ class bulidPythonScript():
     def addTestScriptMethod(self,projectPath,packageName,caseName,step):
         Dirpath = projectPath + "/" + packageName + ".py"
         caseNameMethod = "def"+" "+caseName+"(self):"
-        initCaseStep="playwright = sync_playwright().start()"
         with open(Dirpath, 'a+', encoding="utf-8") as f:
             f.write('\t'+caseNameMethod+'\n')
             f.write('\t'+'\t'+step+'\n')
