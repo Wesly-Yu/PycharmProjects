@@ -26,14 +26,13 @@ class ActionMethod():
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== '等待':
             time = str(args[0])+"000"
-            writeKeyWord = "self.page.waitForTimeout("+time+")"
+            writeKeyWord = "sleep("+time+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== '输入':
             element=args[0]
             modify_element = modify_locator(element)
             inputString=str(args[1])
-            cleanWord = "self.page.fill("+modify_element+",'')"
-            writeKeyWord = "self.page.type("+modify_element+","+inputString+")"
+            writeKeyWord = "write("+inputString+", into="+modify_element+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, cleanWord)
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== '滑动到页面中间':
