@@ -18,6 +18,9 @@ class play_wright(unittest.TestCase):
         press(ENTER)
         doubleclick("Double click here")
         doubleclick(Image("Directories"))
+        scroll_up(num_pixels=100)
+        scroll_down(num_pixels=100)
+
     def 测试2(self):
         options = ChromeOptions()
         options.add_argument('--start-maximized')

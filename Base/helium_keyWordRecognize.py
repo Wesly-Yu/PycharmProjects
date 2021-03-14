@@ -33,19 +33,14 @@ class ActionMethod():
             modify_element = modify_locator(element)
             inputString=str(args[1])
             writeKeyWord = "write("+inputString+", into="+modify_element+")"
-            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, cleanWord)
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword)== '滑动到页面中间':
-            element = args[0]
-            modify_element = modify_locator(element)
-            times= args[1]
-            writeKeyWord="self.page.querySelector("+modify_element+").scrollIntoViewIfNeeded()"
+        elif str(keyword)== '上滑':
+            pix= args[0]
+            writeKeyWord="scroll_up(num_pixels="+pix+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword)== '存在':
-            element = args[0]
-            modify_element = modify_locator(element)
-            times = args[1]
-            writeKeyWord = "self.page.querySelector(" + modify_element + ").waitForElementState('visible', " + times + ")"
+        elif str(keyword)== '下滑':
+            pix = args[0]
+            writeKeyWord = "scroll_down(num_pixels="+pix+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword) == '获取文本':
             element = args[0]
