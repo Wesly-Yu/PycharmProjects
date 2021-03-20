@@ -43,30 +43,57 @@ class ActionMethod():
             else:
                 writeKeyWord = "write(" + Text + ", into="+element+")"
                 bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword)== '上滑':
+        elif str(keyword)== 'scroll up':
             pix= args[0]
             writeKeyWord="scroll_up(num_pixels="+pix+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword)== '下滑':
+        elif str(keyword)== 'scroll down':
             pix = args[0]
             writeKeyWord = "scroll_down(num_pixels="+pix+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword) == '获取文本':
-            element = args[0]
-            modify_element = modify_locator(element)
-            returnResult=args[1]
-            writeKeyWord =returnResult+"=self.page.querySelector("+modify_element+").textContent()"
+        elif str(keyword) == 'press':
+            element = str(args[0])
+            writeKeyWord ="press("+element+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword) == '打印':
+        elif str(keyword) == 'print':
             element = args[0]
             writeKeyWord ="print("+element+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword) == '切换':
-
-        elif str(keyword) == '点击截图':
-
-        elif str(keyword) == '上一步':
-            writeKeyWord = "self.page.goBack()"
+        elif str(keyword) == 'doubleclick':
+            element = args[0]
+            modify_element = modify_locator(element)
+            writeKeyWord = "doubleclick("+modify_element+")"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'rightclick':
+            element = args[0]
+            modify_element = modify_locator(element)
+            writeKeyWord = "rightclick("+modify_element+")"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'select':
+            element = args[0]
+            element2=args[1]
+            modify_element1 = modify_locator(element)
+            modify_element2 = modify_locator(element2)
+            writeKeyWord = "select("+element+", "+element2+")"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'attach_file':
+            element = args[0]
+            element2=args[1]
+            writeKeyWord = "attach_file("+element+", to="+element2+")"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'select':
+            element = args[0]
+            element2=args[1]
+            modify_element1 = modify_locator(element)
+            modify_element2 = modify_locator(element2)
+            writeKeyWord = "select("+element+", "+element2+")"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'select':
+            element = args[0]
+            element2=args[1]
+            modify_element1 = modify_locator(element)
+            modify_element2 = modify_locator(element2)
+            writeKeyWord = "select("+element+", "+element2+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         else:
             print("无法执行没有的关键字")
