@@ -1,7 +1,7 @@
 import os
 import logging
 from  Base.buildPythonScript import bulidPythonScript
-from  Base.modifyLocator import modify_locator
+from  Base.modifyLocator import modify_locator,define_element
 from getConfig import *
 
 
@@ -35,11 +35,14 @@ class ActionMethod():
             writeKeyWord = "sleep("+time+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== 'write':
-            element=args[0]
-            modify_element = modify_locator(element)
-            inputString=str(args[1])
-            writeKeyWord = "write("+inputString+", into="+modify_element+")"
-            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+            Text=args[0]
+            element = str(args[1])
+            if define_element(element)==True:
+                writeKeyWord = "write("+Text+", into=S("+element+"))"
+                bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+            else:
+                writeKeyWord = "write(" + Text + ", into="+element+")"
+                bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== '上滑':
             pix= args[0]
             writeKeyWord="scroll_up(num_pixels="+pix+")"
