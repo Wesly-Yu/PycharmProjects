@@ -81,20 +81,24 @@ class ActionMethod():
             element2=args[1]
             writeKeyWord = "attach_file("+element+", to="+element2+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword) == 'select':
+        elif str(keyword) == 'refresh':
+            writeKeyWord = "refresh()"
+            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'wait_until':
             element = args[0]
             element2=args[1]
-            modify_element1 = modify_locator(element)
-            modify_element2 = modify_locator(element2)
-            writeKeyWord = "select("+element+", "+element2+")"
-            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
-        elif str(keyword) == 'select':
-            element = args[0]
-            element2=args[1]
-            modify_element1 = modify_locator(element)
-            modify_element2 = modify_locator(element2)
-            writeKeyWord = "select("+element+", "+element2+")"
-            bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+            check_result=define_element(element)
+            if check_result==False:
+                writeKeyWord = "wait_until(Text("+element+").exists)"
+                bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+            else :
+                modify_element1 = modify_locator(element)
+                if element2=="":
+                    writeKeyWord = "wait_until(S("+modify_element1+").exists)"
+                    bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+                else:
+                    writeKeyWord = "wait_until(S(" + modify_element1 + ").exists,"+element2+")"
+                    bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         else:
             print("无法执行没有的关键字")
             logging.info("无法执行没有的关键字")

@@ -26,12 +26,15 @@ class play_wright(unittest.TestCase):
         attach_file("c:/test.txt", to="Please select a file:")
         refresh()
         wait_until(Text("Finished!").exists)
-        TextField("First name").value
+        wait_until(S("@username").exists)
+        name=TextField("First name").value
+        drag_file(r"C:\Documents\notes.txt", to="Drop files here")
 
     def 测试2(self):
         options = ChromeOptions()
         options.add_argument('--start-maximized')
         start_chrome('www.baidu.com',headless=False,options=options)
+        wait_until(S("#su").exists)
         write('qq邮箱')
         sleep(5)
         press(ENTER)
