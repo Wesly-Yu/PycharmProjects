@@ -4,6 +4,7 @@ from time import sleep
 from helium import *
 from selenium.webdriver import ChromeOptions,FirefoxOptions
 
+
 class play_wright(unittest.TestCase):
     options = ChromeOptions()
     optionsFireFox = FirefoxOptions()
@@ -25,6 +26,7 @@ class play_wright(unittest.TestCase):
         attach_file("c:/test.txt", to="Please select a file:")
         refresh()
         wait_until(Text("Finished!").exists)
+        TextField("First name").value
 
     def 测试2(self):
         options = ChromeOptions()
