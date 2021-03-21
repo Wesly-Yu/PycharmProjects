@@ -2,7 +2,8 @@ import os
 import unittest
 from time import sleep
 from helium import *
-from selenium.webdriver import ChromeOptions,FirefoxOptions
+from selenium.webdriver import ChromeOptions, FirefoxOptions
+from pathlib import Path
 
 
 class play_wright(unittest.TestCase):
@@ -10,8 +11,9 @@ class play_wright(unittest.TestCase):
     optionsFireFox = FirefoxOptions()
     options.add_argument('--start-maximized')
 
-    def  测试1(self):
-        start_chrome("https://www.zhihu.com/signin?next=%2F", options=self.options)
+    def 测试1(self):
+        start_chrome("https://www.zhihu.com/signin?next=%2F",
+                     options=self.options)
         click(Text("密码登录"))
         write("python@123.com", into=S("@username"))
         write("python", into="密码")
@@ -27,22 +29,31 @@ class play_wright(unittest.TestCase):
         refresh()
         wait_until(Text("Finished!").exists)
         wait_until(S("@username").exists)
-        name=TextField("First name").value
+        name = TextField("First name").value
         drag_file(r"C:\Documents\notes.txt", to="Drop files here")
         drag("Drag me!", to="Drop here.")
         get_driver().save_screenshot(r'C:\screenshot.png')
-        Text("Do you want to proceed?").exists()
+        if Text("Do you want to proceed?").exists():
+            print("111")
+        else:
+        print("2222")
 
     def 测试2(self):
         options = ChromeOptions()
         options.add_argument('--start-maximized')
-        start_chrome('www.baidu.com',headless=False,options=options)
+        start_chrome('www.baidu.com', headless=False, options=options)
         wait_until(S("//input[@id='su']").exists)
         write('qq邮箱')
         sleep(5)
         get_driver().save_screenshot(r'C:\screenshot.png')
         press(ENTER)
+        if Text("Do you want to proceed?").exists():
+            print("111")
+        else:
+            print("2222")
         kill_browser()
+
+
 if __name__ == '__main__':
     suite = unittest.TestSuite()
     suite.addTest(play_wright('测试2'))

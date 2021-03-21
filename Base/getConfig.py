@@ -9,9 +9,12 @@
 from pathlib import Path
 import configparser
 
-paths = ["resource","config.ini"]
-osp=Path.cwd().parent.joinpath(*paths)
-cf = configparser.ConfigParser()
-cf.read(osp)
-browser = cf.get("Options","browser")
-head=cf.get('Options', 'headless')
+paths = ["Base","helium_script.py"]
+osp=str(Path.cwd().parent.joinpath(*paths))
+script = "python -m black "+osp
+print(script)
+
+# cf = configparser.ConfigParser()
+# cf.read(osp)
+# browser = cf.get("Options","browser")
+# head=cf.get('Options', 'headless')
