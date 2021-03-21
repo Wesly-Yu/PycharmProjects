@@ -15,6 +15,13 @@ def define_element(element):
         return True
     else:
         return False
+def text_add_quotation(text):
+    if text!='':
+        text_para="'"+text+"'"
+        return text_para
+    else:
+        return None
+
 
 
 

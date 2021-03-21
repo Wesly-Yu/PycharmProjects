@@ -1,7 +1,7 @@
 import os
 import logging
 from  Base.buildPythonScript import bulidPythonScript
-from  Base.modifyLocator import modify_locator,define_element
+from  Base.modifyLocator import modify_locator,define_element,text_add_quotation
 from getConfig import *
 
 
@@ -22,7 +22,6 @@ class ActionMethod():
         elif str(keyword)== 'click':
             element=str(args[0])
             modify_element=modify_locator(element)
-
             writeKeyWord ="click("+modify_element+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== 'click button':
@@ -31,7 +30,7 @@ class ActionMethod():
             writeKeyWord ="click(Button("+modify_element+"))"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== 'wait':
-            time = str(args[0])+"000"
+            time = str(args[0])
             writeKeyWord = "sleep("+time+")"
             bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
         elif str(keyword)== 'write':
@@ -89,16 +88,28 @@ class ActionMethod():
             element2=args[1]
             check_result=define_element(element)
             if check_result==False:
-                writeKeyWord = "wait_until(Text("+element+").exists)"
-                bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+                if element!=None:
+                    text=text_add_quotation(element)
+                    writeKeyWord = "wait_until(Text("+text+").exists)"
+                    bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+                else:
+                    print("Text parameter is None")
             else :
                 modify_element1 = modify_locator(element)
                 if element2=="":
                     writeKeyWord = "wait_until(S("+modify_element1+").exists)"
                     bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
                 else:
-                    writeKeyWord = "wait_until(S(" + modify_element1 + ").exists,"+element2+")"
+                    writeKeyWord = "wait_until(S("+modify_element1+").exists,"+element2+")"
                     bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+        elif str(keyword) == 'exists_text':
+            element = args[0]
+            if element!="":
+                text=text_add_quotation(element)
+                writeKeyWord = "Text("+text+").exists()"
+                bulidPythonScript.addTestScriptMethod(projectPath, packageName, caseName, writeKeyWord)
+            else:
+                logging.error("please input your text")
         else:
             print("无法执行没有的关键字")
             logging.info("无法执行没有的关键字")

@@ -29,14 +29,18 @@ class play_wright(unittest.TestCase):
         wait_until(S("@username").exists)
         name=TextField("First name").value
         drag_file(r"C:\Documents\notes.txt", to="Drop files here")
+        drag("Drag me!", to="Drop here.")
+        get_driver().save_screenshot(r'C:\screenshot.png')
+        Text("Do you want to proceed?").exists()
 
     def 测试2(self):
         options = ChromeOptions()
         options.add_argument('--start-maximized')
         start_chrome('www.baidu.com',headless=False,options=options)
-        wait_until(S("#su").exists)
+        wait_until(S("//input[@id='su']").exists)
         write('qq邮箱')
         sleep(5)
+        get_driver().save_screenshot(r'C:\screenshot.png')
         press(ENTER)
         kill_browser()
 if __name__ == '__main__':
